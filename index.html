@@ -225,17 +225,16 @@ async function load(){
     const iStat = 3;
 
    
-    bookings = rows.slice(1).map(r=>{
-      const status = iStat >= 0 ? (r[iStat] || "").trim() : "จองแล้ว";
-      if(status !== "จองแล้ว" && !status.includes("วันหยุด")) return null;
-      const s = toDate(r[iS]); if(!s) return null;
-      return { 
-        start: s, 
-        end: toDate(r[iE])||s, 
-        name: (r[iN] || "วันหยุด").trim(), 
-        type: status.includes("วันหยุด") ? "วันหยุด" : status 
-      };
-    }).filter(Boolean);
+    bookings = bookings = rows.slice(1).map(r=>{
+  const s = toDate(r[iS]); if(!s) return null;
+  const status = (r[iStat] || "จองแล้ว").trim();
+  return {
+    start: s,
+    end: toDate(r[iE])||s,
+    name: (r[iN] || "จองแล้ว").trim(),
+    type: status.includes("วันหยุด") ? "วันหยุด" : "จองแล้ว"
+  };
+}).filter(Boolean);
   }catch(e){
     document.getElementById("errBox").innerHTML=
       `<div class="err">โหลดข้อมูลไม่สำเร็จ (${e.message}) — ตรวจสอบการแชร์และลิงก์ CSV อีกครั้ง</div>`;
