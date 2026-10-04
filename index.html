@@ -213,7 +213,7 @@ function toDate(s){
   if(m) return new Date(+m[3],+m[2]-1,+m[1]);
   const d=new Date(s); return isNaN(d)?null:d;
 }
-const key=d=>d.getFullYear()+"-"+d.getMonth()+1)+"-"+d.getDate();
+const key=d=>d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 
 async function load(){
   try{
