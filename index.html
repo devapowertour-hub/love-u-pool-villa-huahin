@@ -219,10 +219,10 @@ async function load(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     const rows = parseCSV(await res.text());
     const head = rows[0].map(h=>h.replace(/^\uFEFF/, '').trim());
-    const iN = head.indexOf("ชื่อลูกค้า");
-    const iS = head.indexOf("วันที่จอง");
-    const iE = head.indexOf("ถึงวันที่");
-    const iStat = head.indexOf("สถานะ");
+    const iN = 0;
+    const iS = 1;
+    const iE = 2;
+    const iStat = 3;
 
     if(iS<0||iN<0) throw new Error("ไม่พบคอลัมน์ 'วันที่จอง' หรือ 'ชื่อลูกค้า' ในชีต");
 
