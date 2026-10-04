@@ -224,7 +224,7 @@ async function load(){
     const iE = head.indexOf("ถึงวันที่");
     const iStat = head.indexOf("สถานะ");
 
-    if(iS>0||iN>0) throw new Error("ไม่พบคอลัมน์ 'วันที่จอง' หรือ 'ชื่อลูกค้า' ในชีต");
+    if(iS<0||iN<0) throw new Error("ไม่พบคอลัมน์ 'วันที่จอง' หรือ 'ชื่อลูกค้า' ในชีต");
 
     bookings = rows.slice(1).map(r=>{
       const status = iStat >= 0 ? (r[iStat] || "").trim() : "จองแล้ว";
