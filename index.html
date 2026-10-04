@@ -155,7 +155,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:24px}
 /* =========================================================
    วางลิงก์ CSV ของคุณไว้ระหว่างเครื่องหมายคำพูดด้านล่างนี้
 ========================================================= */
-const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYImqwysptxh2tY3S1x-A5NkYVQmCeKkmpoW5rBHgLScWpTtssy3aKWCDb2dzMafIHs7quW3_5rQRn/pub?output=csv"
+const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYImqwysptxh2tY3S1x-A5NkYVQmCeKkmpoW5rBHgLScWpTtssy3aKWCDb2dzMafIHs7quW3_5rQRn/pub?output=csv";
 
 const TH_MONTH=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
 "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
@@ -218,7 +218,7 @@ async function load(){
     const res = await fetch(SHEET_CSV + "&t=" + Date.now());
     if(!res.ok) throw new Error("HTTP "+res.status);
     const rows = parseCSV(await res.text());
-    const head = rows[0].map(h=>h.trim());
+    const head = rows[0].map(h=>h.replace(/^\uFEFF/, '').trim());
     const iN = head.indexOf("ชื่อลูกค้า");
     const iS = head.indexOf("วันที่จอง");
     const iE = head.indexOf("ถึงวันที่");
