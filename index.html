@@ -310,7 +310,7 @@ const first = new Date(y, m, 1).getDay();
 const total = new Date(y, m + 1, 0).getDate();
 let busy = 0, free = 0;
 const freeDays = [];
-
+grid.innerHTML = "";
 
   for(let i=0;i<first;i++) grid.insertAdjacentHTML("beforeend",'<div class="day empty"></div>');
   for(let d=1;d<=total;d++){
