@@ -11,14 +11,12 @@
 body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);padding:20px;line-height:1.5}
 .wrap{max-width:1100px;margin:0 auto}
 
-/* Hero Section */
 .hero{background:linear-gradient(135deg, #0f766e 0%, #042f2e 100%);color:#fff;border-radius:24px;padding:36px 30px;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(15,118,110,.2)}
 .hero::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:rgba(255,255,255,.05);border-radius:50%}
 .badge{display:inline-block;background:rgba(245,158,11,.2);color:#fbbf24;border:1px solid rgba(245,158,11,.3);padding:6px 16px;border-radius:999px;font-size:.8rem;font-weight:500;letter-spacing:1px;margin-bottom:12px}
 .hero h1{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:700;margin-bottom:6px}
 .hero p{font-size:clamp(.9rem,1.8vw,1.05rem);opacity:.90;font-weight:300}
 
-/* Quick CTA Banner (Phone & LINE) */
 .cta-banner{display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:14px;margin-bottom:20px}
 .cta-card{background:var(--card);border-radius:18px;padding:18px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 20px rgba(0,0,0,.04);text-decoration:none;color:inherit;border:2px solid transparent;transition:all .25s ease}
 .cta-card:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(15,118,110,.12);border-color:var(--primary)}
@@ -28,27 +26,24 @@ body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);padd
 .cta-info span{display:block;font-size:.75rem;color:var(--muted);font-weight:400}
 .cta-info b{font-size:1.1rem;color:var(--text);font-weight:600}
 
-/* Stats Section */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:20px}
 .stat{background:var(--card);border-radius:18px;padding:20px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.04);border:1px solid #f1f5f9}
 .stat b{display:block;font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;margin-bottom:2px}
 .stat span{font-size:.8rem;color:var(--muted);font-weight:500}
 .c-busy{color:#ea580c}.c-free{color:#0f766e}.c-total{color:#0284c7}.c-rate{color:#7c3aed}
 
-/* Calendar Card */
 .card{background:var(--card);border-radius:24px;padding:24px;box-shadow:0 4px 25px rgba(0,0,0,.04);margin-bottom:20px;border:1px solid #f1f5f9}
 .err{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:14px;padding:14px 18px;font-size:.9rem;margin-bottom:16px}
 .bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px}
 .nav{display:flex;align-items:center;gap:14px}
 .nav button{width:42px;height:42px;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:1.2rem;color:var(--primary);display:flex;align-items:center;justify-content:center;transition:all .2s}
-.nav button:hover{background:var(--primary);color:#fff;border-color:var(--primary);transform:scale(1.05)}
+.nav button:hover{background:var(--primary);color:#fff;border-color:#e2e8f0;transform:scale(1.05)}
 .nav h2{font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:600;min-width:180px;text-align:center}
 
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);font-weight:500}
 .legend span{display:flex;align-items:center;gap:6px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:50%}
 
-/* Grid System */
 .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
 .dow{text-align:center;font-size:.82rem;font-weight:600;color:var(--muted);padding:8px 0}
 .day{aspect-ratio:1/1;border-radius:14px;padding:8px;display:flex;flex-direction:column;overflow:hidden;border:1px solid transparent;transition:all .2s}
@@ -63,12 +58,10 @@ body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);padd
 .past-d{background:#f8fafc;border-color:#f1f5f9;color:#cbd5e1}
 .today{box-shadow:0 0 0 2px var(--primary)!important}
 
-/* Free Date Chips */
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .chip{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;border-radius:12px;padding:8px 14px;font-size:.82rem;font-weight:500}
 .chip small{display:block;font-size:.7rem;opacity:.8;font-weight:400}
 
-/* Modal QR Code */
 .modal{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:99}
 .modal.on{display:flex}
 .box{background:#fff;border-radius:24px;padding:30px;text-align:center;max-width:340px;width:100%;box-shadow:0 20px 40px rgba(0,0,0,.2);animation:pop .25s cubic-bezier(0.16, 1, 0.3, 1)}
@@ -88,20 +81,18 @@ body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);padd
 <body>
 <div class="wrap">
 
-  <!-- ส่วนหัวเว็บ -->
   <div class="hero">
     <div class="badge">LOVE U POOL VILLA HUA HIN</div>
     <h1>ปฏิทินห้องว่าง & จองที่พัก</h1>
     <p>เช็ควันว่างและวันหยุดนักขัตฤกษ์ล่วงหน้าได้ง่ายๆ อยากได้วันไหนทักมาจองเลยค่ะ</p>
   </div>
 
-  <!-- ปุ่มติดต่อด่วน (เบอร์โทร & LINE) -->
   <div class="cta-banner">
     <a class="cta-card phone" href="tel:0636599893">
       <div class="cta-icon">📞</div>
       <div class="cta-info">
         <span>โทรจอง / สอบถามด่วน</span>
-        <b>063-659-9893</b>
+        <b>0636599893</b>
       </div>
     </a>
     <a class="cta-card line" href="#" id="lineBtn">
@@ -113,7 +104,6 @@ body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);padd
     </a>
   </div>
 
-  <!-- สถิติภาพรวม -->
   <div class="stats">
     <div class="stat"><b class="c-busy" id="sBusy">0</b><span>จองแล้ว (วัน)</span></div>
     <div class="stat"><b class="c-free" id="sFree">0</b><span>ว่าง • จองได้</span></div>
@@ -121,7 +111,6 @@ body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);padd
     <div class="stat"><b class="c-rate" id="sRate">0%</b><span>อัตราเข้าพัก</span></div>
   </div>
 
-  <!-- ตัวปฏิทิน -->
   <div class="card">
     <div id="errBox"></div>
     <div class="bar">
@@ -143,7 +132,6 @@ body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);padd
   <div class="foot">อัปเดตข้อมูลล่าสุดจากระบบ <span id="upd">—</span></div>
 </div>
 
-<!-- Modal แสดง QR Code LINE -->
 <div class="modal" id="qrModal">
   <div class="box">
     <h3>สแกน QR Code</h3>
@@ -160,6 +148,7 @@ const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYImqwysptxh
 const LINE_URL  = "https://line.me/ti/p/~loveupoolvillahuahin";
 
 const TH_MONTH = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+const TH_SHORT_MONTH = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
 const DOW = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัส","ศุกร์","เสาร์"];
 
 const TH_HOLIDAYS = {
@@ -312,7 +301,9 @@ function render(){
     const last = ranges[ranges.length - 1];
     if(last && d === last[1] + 1) last[1] = d; else ranges.push([d, d]);
   });
-  const mn = TH_MONTH[m].slice(0, 3) + ".";
+  
+  // ใช้ชื่อเดือนย่อที่ปรับใหม่ (เช่น ต.ค.)
+  const mn = TH_SHORT_MONTH[m];
   document.getElementById("freeList").innerHTML = ranges.length
     ? ranges.map(r => '<div class="chip">' + (r[0] === r[1] ? r[0] + " " + mn : r[0] + "-" + r[1] + " " + mn) +
         '<small>' + (r[1] - r[0] + 1) + ' วันติดต่อกัน</small></div>').join("")
