@@ -272,12 +272,10 @@ function render(){
   const y=view.getFullYear(), m=view.getMonth();
   document.getElementById("title").textContent=TH_MONTH[m]+" "+y;
 
-  const map={};
-  
-  if(y === 2026){
-    for(let k in TH_HOLIDAYS){
-      map[k] = { name: TH_HOLIDAYS[k], type: 'วันหยุด' };
-    }
+  const map = {};
+for(let k in TH_HOLIDAYS){
+    map[k] = { name: TH_HOLIDAYS[k], type: 'วันหยุด' };
+}
   }
 
   bookings.forEach(b=>{
