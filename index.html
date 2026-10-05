@@ -300,10 +300,13 @@ for(let k in TH_HOLIDAYS){
   const grid=document.getElementById("grid"); grid.innerHTML="";
   DOW.forEach(d=>grid.insertAdjacentHTML("beforeend",'<div class="dow">'+d+'</div>'));
 
-  const y = view.getFullYear();
+const y = view.getFullYear();
 const m = view.getMonth();
-const first = new Date(y, m, 1).getDay(), total = new Date(y, m + 1, 0).getDate();
-let busy = 0, free = 0; const freeDays = [];
+const map = {};
+for(let k in TH_HOLIDAYS){
+    map[k] = { name: TH_HOLIDAYS[k], type: 'วันหยุด' };
+}
+
 
 
   for(let i=0;i<first;i++) grid.insertAdjacentHTML("beforeend",'<div class="day empty"></div>');
