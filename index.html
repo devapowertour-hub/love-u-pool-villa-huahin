@@ -238,7 +238,7 @@ function toDate(s){
   const d=new Date(s); return isNaN(d)?null:d;
 }
 const key=d=>d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-
+let view = new Date();
 async function load(){
   try{
     const res = await fetch(SHEET_CSV + "&t=" + Date.now());
