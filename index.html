@@ -1,389 +1,317 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ปฏิทินห้องว่าง - Love U Pool Villa Hua Hin</title>
-    <style>
-        :root {
-            --primary: #0d9488;
-            --primary-dark: #0f766e;
-            --bg-light: #f8fafc;
-            --text-main: #334155;
-            --border-color: #e2e8f0;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-        .header-banner {
-            background: linear-gradient(135deg, #0d9488, #115e59);
-            color: white;
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-        }
-        .header-banner h1 { margin: 0 0 8px 0; font-size: 24px; }
-        .header-banner p { margin: 0; opacity: 0.9; font-size: 14px; }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        .stat-card {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            padding: 16px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .stat-card .num { font-size: 24px; font-weight: bold; color: var(--primary); }
-        .stat-card .label { font-size: 13px; color: #64748b; margin-top: 4px; }
-
-        .calendar-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .calendar-nav button {
-            background: white;
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            color: var(--text-main);
-        }
-        .calendar-nav button:hover { background: #f1f5f9; }
-        .calendar-nav h2 { margin: 0; font-size: 20px; }
-
-        .legend {
-            display: flex;
-            gap: 16px;
-            font-size: 13px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-        .legend-item { display: flex; align-items: center; gap: 6px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-free { background: #10b981; }
-        .dot-holiday { background: #f59e0b; }
-        .dot-busy { background: #ef4444; }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-        }
-        .dow {
-            text-align: center;
-            font-weight: bold;
-            font-size: 13px;
-            color: #64748b;
-            padding: 8px 0;
-        }
-        .day {
-            min-height: 90px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            font-size: 12px;
-            background: white;
-        }
-        .day.empty { border: none; background: transparent; }
-        .day.today { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2); }
-        .day .num { font-weight: bold; font-size: 14px; }
-        
-        .free-d { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
-        .busy-d { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
-        .special-d { background: #fffbeb; border-color: #fde68a; color: #92400e; }
-        .past-d { background: #f1f5f9; border-color: #e2e8f0; color: #94a3b8; }
-
-        .tag {
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            display: inline-block;
-            text-align: center;
-            font-weight: 500;
-        }
-        .free-d .tag { background: #d1fae5; color: #047857; }
-        .busy-d .tag { background: #fee2e2; color: #b91c1c; }
-        .special-d .tag { background: #fef3c7; color: #b45309; }
-        .past-d .tag { background: #e2e8f0; color: #64748b; }
-        
-        .who { font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; }
-
-        .free-ranges {
-            margin-top: 24px;
-            padding: 16px;
-            background: #f8fafc;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-        .free-ranges h3 { margin: 0 0 10px 0; font-size: 15px; }
-        .chips-container { display: flex; flex-wrap: wrap; gap: 8px; }
-        .chip {
-            background: #ecfdf5;
-            border: 1px solid #a7f3d0;
-            color: #065f46;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .chip small { background: #10b981; color: white; padding: 1px 5px; border-radius: 4px; font-size: 10px; }
-        .err { background: #fee2e2; color: #b91c1c; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 13px; }
-        .alert-banner { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 13px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ปฏิทินห้องว่าง | Love U Pool Villa Hua Hin</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Prompt',sans-serif;background:#f4f6f8;color:#243b40;padding:16px;line-height:1.45}
+.wrap{max-width:1100px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;border-radius:20px;padding:28px;margin-bottom:18px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:rgba(255,255,255,.08);border-radius:50%}
+.badge{display:inline-block;background:rgba(255,255,255,.18);padding:6px 14px;border-radius:999px;font-size:.78rem;letter-spacing:.5px;margin-bottom:10px}
+.hero h1{font-size:clamp(1.4rem,3.4vw,2rem);font-weight:600}
+.hero p{font-size:clamp(.82rem,1.8vw,.95rem);opacity:.92;margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:#fff;border-radius:16px;padding:18px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.stat b{display:block;font-size:clamp(1.5rem,4vw,2rem);font-weight:600}
+.stat span{font-size:.78rem;color:#6b7b80}
+.c1{color:#d97706}.c2{color:#0f766e}.c3{color:#243b40}.c4{color:#2563eb}
+.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:18px}
+.err{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:12px;padding:12px 16px;font-size:.85rem;margin-bottom:14px}
+.bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.nav{display:flex;align-items:center;gap:14px}
+.nav button{width:40px;height:40px;border-radius:50%;border:1px solid #d8e2e4;background:#fff;cursor:pointer;font-size:1.1rem;color:#0f766e;transition:.2s}
+.nav button:hover{background:#0f766e;color:#fff;border-color:#0f766e}
+.nav h2{font-size:clamp(1rem,2.6vw,1.25rem);font-weight:600;min-width:170px;text-align:center}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.75rem;color:#53666b}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.dow{text-align:center;font-size:.76rem;font-weight:500;color:#7b8c91;padding:6px 0}
+.day{aspect-ratio:1/1;border-radius:12px;padding:7px;display:flex;flex-direction:column;overflow:hidden;border:1px solid transparent}
+.day .num{font-size:clamp(.78rem,1.9vw,.95rem);font-weight:600;line-height:1.2}
+.day .who{font-size:clamp(.55rem,1.4vw,.68rem);margin-top:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.day .tag{font-size:clamp(.52rem,1.3vw,.65rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.9}
+.day .tag:only-of-type{margin-top:auto}
+.empty{background:transparent;border:none}
+.free-d{background:#ecfdf5;border-color:#c3ece0;color:#0f766e}
+.busy-d{background:#fff7ed;border-color:#fed7aa;color:#c2410c}
+.special-d{background:#fffbeb;border-color:#fde68a;color:#a16207}
+.past-d{background:#f6f7f8;border-color:#eceff0;color:#a9b4b7}
+.today{box-shadow:0 0 0 2px #0f766e}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{background:#ecfdf5;border:1px solid #c3ece0;color:#0f766e;border-radius:10px;padding:7px 12px;font-size:.78rem}
+.chip small{display:block;font-size:.65rem;opacity:.75}
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.ct{border:1px solid #e6ebec;border-radius:14px;padding:16px;text-align:center;cursor:pointer;transition:.2s;text-decoration:none;display:block;color:inherit;background:#fff}
+.ct:hover{border-color:#0f766e;background:#f3fbf9;transform:translateY(-2px)}
+.ct span{display:block;font-size:.72rem;color:#7b8c91;margin-bottom:4px}
+.ct b{font-size:clamp(.95rem,2.2vw,1.1rem);color:#0f766e;font-weight:600}
+.ct em{display:block;font-style:normal;font-size:.68rem;color:#9aa8ac;margin-top:4px}
+.modal{position:fixed;inset:0;background:rgba(15,30,32,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:99}
+.modal.on{display:flex}
+.box{background:#fff;border-radius:20px;padding:26px;text-align:center;max-width:320px;width:100%}
+.box h3{font-size:1.05rem;font-weight:600;margin-bottom:4px}
+.box p{font-size:.78rem;color:#7b8c91;margin-bottom:14px}
+.box img{width:200px;height:200px;border:1px solid #e6ebec;border-radius:14px;padding:8px}
+.box .lid{font-size:.9rem;font-weight:600;color:#0f766e;margin-top:12px}
+.box a.open{display:block;background:#06c755;color:#fff;border-radius:10px;padding:10px;font-size:.85rem;font-weight:500;text-decoration:none;margin-top:14px}
+.box button{width:100%;margin-top:8px;background:#f1f4f5;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:.85rem;color:#53666b;cursor:pointer}
+.foot{text-align:center;font-size:.72rem;color:#8b999d;padding:8px 0 20px}
+@media(max-width:560px){body{padding:10px}.card{padding:14px}.grid{gap:4px}.day{padding:5px;border-radius:9px}}
+</style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="container">
-    <div class="header-banner">
-        <h1>LOVE U POOL VILLA HUA HIN</h1>
-        <p>ปฏิทินห้องว่าง ตรวจสอบวันว่างและวันหยุดได้ทันที สนใจวันไหนทักมาได้เลยค่ะ</p>
-    </div>
+  <div class="hero">
+    <div class="badge">LOVE U POOL VILLA HUA HIN</div>
+    <h1>ปฏิทินห้องว่าง</h1>
+    <p>ตรวจสอบวันว่างและวันหยุดได้ที่นี่ สนใจวันไหนทักมาได้เลยค่ะ</p>
+  </div>
 
-    <div id="checkInAlert"></div>
+  <div class="stats">
+    <div class="stat"><b class="c1" id="sBusy">0</b><span>จองแล้ว (วัน)</span></div>
+    <div class="stat"><b class="c2" id="sFree">0</b><span>ว่าง • จองได้</span></div>
+    <div class="stat"><b class="c3" id="sAll">0</b><span>วันทั้งหมด</span></div>
+    <div class="stat"><b class="c4" id="sRate">0%</b><span>อัตราเข้าพัก</span></div>
+  </div>
+
+  <div class="card">
     <div id="errBox"></div>
-
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="num" id="sBusy">0</div>
-            <div class="label">จองแล้ว (วัน)</div>
-        </div>
-        <div class="stat-card">
-            <div class="num" id="sFree">0</div>
-            <div class="label">ว่าง • จองได้</div>
-        </div>
-        <div class="stat-card">
-            <div class="num" id="sAll">0</div>
-            <div class="label">วันทั้งหมด</div>
-        </div>
-        <div class="stat-card">
-            <div class="num" id="sRate">0.0%</div>
-            <div class="label">อัตราเข้าพัก</div>
-        </div>
+    <div class="bar">
+      <div class="nav">
+        <button id="prev">&#8249;</button>
+        <h2 id="title">—</h2>
+        <button id="next">&#8250;</button>
+      </div>
+      <div class="legend">
+        <span><i style="background:#0f766e"></i>ว่างปกติ</span>
+        <span><i style="background:#f59e0b"></i>หยุด / นักขัตฤกษ์</span>
+        <span><i style="background:#ea580c"></i>จองแล้ว</span>
+      </div>
     </div>
-
-    <div class="calendar-nav">
-        <button id="prev">&lt; เดือนก่อนหน้า</button>
-        <h2 id="title"></h2>
-        <button id="next">เดือนถัดไป &gt;</button>
-    </div>
-
-    <div class="legend">
-        <div class="legend-item"><div class="dot dot-free"></div><span>ว่างปกติ</span></div>
-        <div class="legend-item"><div class="dot dot-holiday"></div><span>หยุด / นักขัตฤกษ์</span></div>
-        <div class="legend-item"><div class="dot dot-busy"></div><span>จองแล้ว</span></div>
-    </div>
-
     <div class="grid" id="grid"></div>
+    <div class="chips" id="freeList"></div>
+  </div>
 
-    <div class="free-ranges">
-        <h3>ช่วงวันว่างแนะนำ</h3>
-        <div class="chips-container" id="freeList">กำลังโหลดข้อมูล...</div>
-    </div>
+  <div class="card contact">
+    <a class="ct" href="tel:***-***-****">
+      <span>โทรจองห้องพัก</span>
+      <b>***-***-****</b>
+      <em>แตะเพื่อโทรออก</em>
+    </a>
+    <a class="ct" href="#" id="lineBtn">
+      <span>LINE ID</span>
+      <b>loveupoolvillahuahin</b>
+      <em>แตะเพื่อแสดง QR Code</em>
+    </a>
+  </div>
+
+  <div class="foot">อัปเดตล่าสุด <span id="upd">—</span></div>
+</div>
+
+<div class="modal" id="qrModal">
+  <div class="box">
+    <h3>สแกนเพื่อเพิ่มเพื่อน</h3>
+    <p>Love U Pool Villa Hua Hin</p>
+    <img id="qrImg" alt="LINE QR Code">
+    <div class="lid">loveupoolvillahuahin</div>
+    <a class="open" href="https://line.me/ti/p/~loveupoolvillahuahin" target="_blank" rel="noopener">เปิดแอป LINE เลย</a>
+    <button id="closeQr">ปิด</button>
+  </div>
 </div>
 
 <script>
-    // แทนที่ลิงก์ด้านล่างนี้ด้วยลิงก์ Google Sheets CSV ของคุณ
-    const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYImqwysptxh2tY3S1x-A5NkYVQmCeKkmpoW5rBHgLScWpTtssy3aKWCDb2dzMafIHs7quW3_5rQRn/pub?output=csv";
+/* ========================================================
+   ตั้งค่าตรงนี้
+   USE_MANUAL = true   -> ใช้ข้อมูลในโค้ดด้านล่าง
+   USE_MANUAL = false  -> ดึงจาก Google Sheets
+   ======================================================== */
+const USE_MANUAL = true;
 
-    const TH_MONTH = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
-    const DOW = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+/* รูปแบบ: ["ชื่อลูกค้า", "วันเช็คอิน", "วันเช็คเอาต์"] */
+const MANUAL_BOOKINGS = [
+  ["คุณสมชาย", "2026-10-18", "2026-10-20"],
+  ["คุณมานี",  "2026-11-07", "2026-11-09"],
+  ["คุณวิชัย",  "2026-12-24", "2026-12-26"]
+];
 
-    // วันหยุดนักขัตฤกษ์ปี 2026 - 2027
-    const TH_HOLIDAYS = {
-        // 2026
-        "2026-1-1": "วันขึ้นปีใหม่", "2026-3-3": "วันมาฆบูชา", "2026-4-6": "วันจักรี",
-        "2026-4-13": "วันสงกรานต์", "2026-4-14": "วันสงกรานต์", "2026-4-15": "วันสงกรานต์",
-        "2026-5-1": "วันแรงงาน", "2026-5-4": "วันฉัตรมงคล", "2026-5-31": "วันวิสาขบูชา",
-        "2026-7-28": "วันเฉลิมฯ ร.10", "2026-7-29": "วันอาสาฬหบูชา", "2026-7-30": "วันเข้าพรรษา",
-        "2026-8-12": "วันแม่แห่งชาติ", "2026-10-13": "วันนวมินทรมหาราช", "2026-10-23": "วันปิยมหาราช",
-        "2026-12-5": "วันพ่อแห่งชาติ", "2026-12-7": "ชดเชยวันพ่อ", "2026-12-10": "วันรัฐธรรมนูญ", "2026-12-31": "วันสิ้นปี",
-        // 2027
-        "2027-1-1": "วันขึ้นปีใหม่", "2027-2-21": "วันมาฆบูชา", "2027-2-22": "ชดเชยวันมาฆบูชา",
-        "2027-4-6": "วันจักรี", "2027-4-13": "วันสงกรานต์", "2027-4-14": "วันสงกรานต์", "2027-4-15": "วันสงกรานต์",
-        "2027-5-1": "วันแรงงาน", "2027-5-3": "ชดเชยวันแรงงาน", "2027-5-4": "วันฉัตรมงคล", "2027-5-20": "วันวิสาขบูชา",
-        "2027-6-3": "วันเฉลิมฯ พระราชินี", "2027-7-18": "วันอาสาฬหบูชา", "2027-7-19": "วันเข้าพรรษา",
-        "2027-7-28": "วันเฉลิมฯ ร.10", "2027-8-12": "วันแม่แห่งชาติ", "2027-10-13": "วันนวมินทรมหาราช",
-        "2027-10-23": "วันปิยมหาราช", "2027-12-5": "วันพ่อแห่งชาติ", "2027-12-6": "ชดเชยวันพ่อ",
-        "2027-12-10": "วันรัฐธรรมนูญ", "2027-12-31": "วันสิ้นปี"
-    };
+const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYImqwysptxh2tY3S1x-A5NkYVQmCeKkmpoW5rBHgLScWpTtssy3aKWCDb2dzMafIHs7quW3_5rQRn/pub?output=csv";
+const LINE_URL  = "https://line.me/ti/p/~loveupoolvillahuahin";
 
-    let bookings = [];
-    let view = new Date();
-    view.setDate(1);
+const TH_MONTH = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+const DOW = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัส","ศุกร์","เสาร์"];
 
-    function parseCSV(text) {
-        const rows = []; let row = [], cell="", q=false;
-        for(let i=0; i<text.length; i++){
-            const c = text[i];
-            if(q){
-                if(c==='"'){ if(text[i+1]==='"'){ cell+='"'; i++; } else { q=false; } }
-                else { cell+=c; }
-            } else {
-                if(c==='"') q=true;
-                else if(c===',') { row.push(cell); cell=""; }
-                else if(c==='\n') { row.push(cell); rows.push(row); row=[]; cell=""; }
-                else if(c!=='\r') cell+=c;
-            }
-        }
-        if(cell||row.length){ row.push(cell); rows.push(row); }
-        return rows.filter(r=>r.some(v=>v.trim()!==""));
+const TH_HOLIDAYS = {
+  "2026-1-1":"วันขึ้นปีใหม่","2026-1-2":"ชดเชยปีใหม่",
+  "2026-3-3":"วันมาฆบูชา","2026-4-6":"วันจักรี",
+  "2026-4-13":"สงกรานต์","2026-4-14":"สงกรานต์","2026-4-15":"สงกรานต์",
+  "2026-5-1":"วันแรงงาน","2026-5-4":"วันฉัตรมงคล","2026-5-31":"วันวิสาขบูชา",
+  "2026-6-1":"ชดเชยวิสาขบูชา","2026-6-3":"วันเฉลิมฯ พระราชินี",
+  "2026-7-28":"วันเฉลิมฯ ร.10","2026-7-29":"วันอาสาฬหบูชา","2026-7-30":"วันเข้าพรรษา",
+  "2026-8-12":"วันแม่แห่งชาติ","2026-10-13":"วันนวมินทรมหาราช","2026-10-23":"วันปิยมหาราช",
+  "2026-12-5":"วันพ่อแห่งชาติ","2026-12-10":"วันรัฐธรรมนูญ","2026-12-31":"วันสิ้นปี",
+
+  "2027-1-1":"วันขึ้นปีใหม่","2027-2-21":"วันมาฆบูชา","2027-2-22":"ชดเชยมาฆบูชา",
+  "2027-4-6":"วันจักรี","2027-4-13":"สงกรานต์","2027-4-14":"สงกรานต์","2027-4-15":"สงกรานต์",
+  "2027-5-1":"วันแรงงาน","2027-5-3":"ชดเชยวันแรงงาน","2027-5-4":"วันฉัตรมงคล",
+  "2027-5-20":"วันวิสาขบูชา","2027-6-3":"วันเฉลิมฯ พระราชินี",
+  "2027-7-18":"วันอาสาฬหบูชา","2027-7-19":"วันเข้าพรรษา","2027-7-28":"วันเฉลิมฯ ร.10",
+  "2027-8-12":"วันแม่แห่งชาติ","2027-10-13":"วันนวมินทรมหาราช","2027-10-23":"วันปิยมหาราช",
+  "2027-12-5":"วันพ่อแห่งชาติ","2027-12-10":"วันรัฐธรรมนูญ","2027-12-31":"วันสิ้นปี"
+};
+
+let bookings = [];
+let view = new Date();
+view = new Date(view.getFullYear(), view.getMonth(), 1);
+
+const key = d => d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+
+function parseCSV(text){
+  const rows = []; let row = [], cell = "", q = false;
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(q){
+      if(c === '"'){ if(text[i+1] === '"'){ cell += '"'; i++; } else q = false; }
+      else cell += c;
+    } else {
+      if(c === '"') q = true;
+      else if(c === ',') { row.push(cell); cell = ""; }
+      else if(c === '\n') { row.push(cell); rows.push(row); row = []; cell = ""; }
+      else if(c !== '\r') cell += c;
     }
+  }
+  if(cell || row.length){ row.push(cell); rows.push(row); }
+  return rows.filter(r => r.some(v => v.trim() !== ""));
+}
 
-    function toDate(s) {
-        s = (s||"").trim(); if(!s) return null;
-        let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-        if(m) return new Date(+m[1], +m[2]-1, +m[3]);
-        m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-        if(m) return new Date(+m[3], +m[2]-1, +m[1]);
-        const d = new Date(s); return isNaN(d)?null:d;
+function toDate(s){
+  s = (s || "").trim(); if(!s) return null;
+  let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if(m) return new Date(+m[1], +m[2]-1, +m[3]);
+  m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m) return new Date(+m[3], +m[2]-1, +m[1]);
+  const d = new Date(s); return isNaN(d) ? null : d;
+}
+
+function mapRow(r){
+  const s = toDate(r[1]); if(!s) return null;
+  return { start: s, end: toDate(r[2]) || s, name: (r[0] || "จองแล้ว").trim() };
+}
+
+async function load(){
+  if(USE_MANUAL){
+    bookings = MANUAL_BOOKINGS.map(mapRow).filter(Boolean);
+    document.getElementById("errBox").innerHTML = "";
+    render();
+    return;
+  }
+  try{
+    const res = await fetch(SHEET_CSV + "&t=" + Date.now());
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    const rows = parseCSV(await res.text());
+    bookings = rows.slice(1).map(mapRow).filter(Boolean);
+    document.getElementById("errBox").innerHTML = "";
+  }catch(e){
+    document.getElementById("errBox").innerHTML =
+      '<div class="err">โหลดข้อมูลไม่สำเร็จ (' + e.message + ') — ลองอัปโหลดไฟล์ขึ้นโฮสต์จริง หรือเปลี่ยน USE_MANUAL เป็น true</div>';
+  }
+  render();
+}
+
+function render(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  DOW.forEach(d => grid.insertAdjacentHTML("beforeend", '<div class="dow">' + d + '</div>'));
+
+  const y = view.getFullYear(), m = view.getMonth();
+  document.getElementById("title").textContent = TH_MONTH[m] + " " + y;
+
+  const map = {};
+  for(const k in TH_HOLIDAYS) map[k] = { name: TH_HOLIDAYS[k], type: "วันหยุด" };
+  bookings.forEach(b => {
+    for(let d = new Date(b.start); d <= b.end; d.setDate(d.getDate() + 1))
+      map[key(d)] = { name: b.name, type: "จองแล้ว" };
+  });
+
+  const first = new Date(y, m, 1).getDay();
+  const total = new Date(y, m + 1, 0).getDate();
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const todayK = key(today);
+  let busy = 0, free = 0; const freeDays = [];
+
+  for(let i = 0; i < first; i++) grid.insertAdjacentHTML("beforeend", '<div class="day empty"></div>');
+
+  for(let d = 1; d <= total; d++){
+    const cur = new Date(y, m, d), k = key(cur), info = map[k];
+    const mark = (k === todayK ? " today" : "");
+    const num = String(d).padStart(2, "0");
+
+    if(info && info.type === "จองแล้ว"){
+      busy++;
+      grid.insertAdjacentHTML("beforeend",
+        '<div class="day busy-d' + mark + '"><div class="num">' + num +
+        '</div><div class="who">' + info.name + '</div><div class="tag">จองแล้ว</div></div>');
+    } else if(info && info.type === "วันหยุด"){
+      if(cur >= today){ free++; freeDays.push(d); }
+      grid.insertAdjacentHTML("beforeend",
+        '<div class="day special-d' + mark + '"><div class="num">' + num +
+        '</div><div class="who">' + info.name + '</div><div class="tag">หยุด • จองได้</div></div>');
+    } else if(cur < today){
+      grid.insertAdjacentHTML("beforeend",
+        '<div class="day past-d"><div class="num">' + num +
+        '</div><div class="tag">ผ่านไปแล้ว</div></div>');
+    } else {
+      free++; freeDays.push(d);
+      grid.insertAdjacentHTML("beforeend",
+        '<div class="day free-d' + mark + '"><div class="num">' + num +
+        '</div><div class="tag">ว่าง • จองได้</div></div>');
     }
+  }
 
-    const key = d => d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+  const rest = (7 - ((first + total) % 7)) % 7;
+  for(let i = 0; i < rest; i++) grid.insertAdjacentHTML("beforeend", '<div class="day empty"></div>');
 
-    async function load() {
-        try {
-            const res = await fetch(SHEET_CSV + "&t=" + Date.now());
-            if(!res.ok) throw new Error("HTTP " + res.status);
-            const rows = parseCSV(await res.text());
-            const iN = 0, iS = 1, iE = 2, iStat = 3;
+  document.getElementById("sBusy").textContent = busy;
+  document.getElementById("sFree").textContent = free;
+  document.getElementById("sAll").textContent = total;
+  document.getElementById("sRate").textContent = (busy / total * 100).toFixed(1) + "%";
 
-            bookings = rows.slice(1).map(r=>{
-                const s = toDate(r[iS]); if(!s) return null;
-                const status = (r[iStat] || "จองแล้ว").trim();
-                return {
-                    start: s,
-                    end: toDate(r[iE])||s,
-                    name: (r[iN] || "จองแล้ว").trim(),
-                    type: status.includes("วันหยุด") ? "วันหยุด" : "จองแล้ว"
-                };
-            }).filter(Boolean);
+  const ranges = [];
+  freeDays.forEach(d => {
+    const last = ranges[ranges.length - 1];
+    if(last && d === last[1] + 1) last[1] = d; else ranges.push([d, d]);
+  });
+  const mn = TH_MONTH[m].slice(0, 3) + ".";
+  document.getElementById("freeList").innerHTML = ranges.length
+    ? ranges.map(r => '<div class="chip">' + (r[0] === r[1] ? r[0] + " " + mn : r[0] + "-" + r[1] + " " + mn) +
+        '<small>' + (r[1] - r[0] + 1) + ' วัน</small></div>').join("")
+    : '<div class="chip" style="background:#fdf1e0;border-color:#f6ddb7;color:#a9671a">เดือนนี้เต็มแล้วค่ะ</div>';
 
-            const now = new Date();
-            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const todayK = key(today);
+  document.getElementById("upd").textContent = new Date().toLocaleString("th-TH",
+    { day:"numeric", month:"long", year:"numeric", hour:"2-digit", minute:"2-digit" });
+}
 
-            const todayCheckIns = bookings.filter(b => key(b.start) === todayK && b.type === 'จองแล้ว');
-            const alertBox = document.getElementById("checkInAlert");
-            if(alertBox) {
-                if(todayCheckIns.length > 0){
-                    const names = todayCheckIns.map(b => b.name).join(", ");
-                    alertBox.innerHTML = `<div class="alert-banner"><span>แจ้งเตือนวันนี้:</span> มีลูกค้าเช็คอินเข้าพัก <b>${names}</b></div>`;
-                } else {
-                    alertBox.innerHTML = "";
-                }
-            }
-            document.getElementById("errBox").innerHTML = "";
-        } catch(e) {
-            document.getElementById("errBox").innerHTML = `<div class="err">โหลดข้อมูลไม่สำเร็จ (${e.message}) - ตรวจสอบลิงก์ Google Sheets CSV หรือการแชร์อีกครั้ง</div>`;
-        }
-        render();
-    }
+document.getElementById("prev").onclick = function(){
+  view = new Date(view.getFullYear(), view.getMonth() - 1, 1); render();
+};
+document.getElementById("next").onclick = function(){
+  view = new Date(view.getFullYear(), view.getMonth() + 1, 1); render();
+};
 
-    function render() {
-        const grid = document.getElementById("grid");
-        grid.innerHTML = "";
-        DOW.forEach(d => grid.insertAdjacentHTML("beforeend", `<div class="dow">${d}</div>`));
+const qrModal = document.getElementById("qrModal");
+document.getElementById("qrImg").src =
+  "https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&data=" + encodeURIComponent(LINE_URL);
+document.getElementById("lineBtn").onclick = function(e){ e.preventDefault(); qrModal.classList.add("on"); };
+document.getElementById("closeQr").onclick = function(){ qrModal.classList.remove("on"); };
+qrModal.onclick = function(e){ if(e.target === qrModal) qrModal.classList.remove("on"); };
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") qrModal.classList.remove("on"); });
 
-        const y = view.getFullYear();
-        const m = view.getMonth();
-        document.getElementById("title").textContent = TH_MONTH[m] + " " + y;
-
-        const map = {};
-        for(let k in TH_HOLIDAYS){
-            map[k] = { name: TH_HOLIDAYS[k], type: 'วันหยุด' };
-        }
-
-        bookings.forEach(b=>{
-            for(let d=new Date(b.start); d<=b.end; d.setDate(d.getDate()+1)) {
-                map[key(d)] = { name: b.name, type: b.type };
-            }
-        });
-
-        const first = new Date(y, m, 1).getDay();
-        const total = new Date(y, m + 1, 0).getDate();
-        let busy = 0, free = 0;
-        const freeDays = [];
-
-        for(let i=0; i<first; i++) grid.insertAdjacentHTML("beforeend", '<div class="day empty"></div>');
-
-        const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const todayK = key(today);
-
-        for(let d=1; d<=total; d++){
-            const cur = new Date(y, m, d), k = key(cur), info = map[k];
-            const mark = (k === todayK ? " today" : ""), num = String(d).padStart(2,"0");
-
-            if(info && info.type === 'จองแล้ว'){
-                busy++;
-                grid.insertAdjacentHTML("beforeend", `<div class="day busy-d${mark}"><div class="num">${num}</div><div class="who">${info.name}</div><div class="tag">จองแล้ว</div></div>`);
-            } else if(info && info.type === 'วันหยุด'){
-                free++; freeDays.push(d);
-                grid.insertAdjacentHTML("beforeend", `<div class="day special-d${mark}"><div class="num">${num}</div><div class="who">${info.name}</div><div class="tag">หยุด • นักขัตฤกษ์</div></div>`);
-            } else if(cur < today){
-                grid.insertAdjacentHTML("beforeend", `<div class="day past-d"><div class="num">${num}</div><div class="tag">ผ่านไปแล้ว</div></div>`);
-            } else {
-                free++; freeDays.push(d);
-                grid.insertAdjacentHTML("beforeend", `<div class="day free-d${mark}"><div class="num">${num}</div><div class="tag">ว่าง • จองได้</div></div>`);
-            }
-        }
-
-        const rest = (7 - ((first + total) % 7)) % 7;
-        for(let i=0; i<rest; i++) grid.insertAdjacentHTML("beforeend", '<div class="day empty"></div>');
-
-        document.getElementById("sBusy").textContent = busy;
-        document.getElementById("sFree").textContent = free;
-        document.getElementById("sAll").textContent = total;
-        document.getElementById("sRate").textContent = (busy / total * 100).toFixed(1) + "%";
-
-        const ranges = [];
-        freeDays.forEach(d=>{
-            const last = ranges[ranges.length-1];
-            if(last && d === last[1]+1) last[1] = d; else ranges.push([d,d]);
-        });
-
-        const mn = TH_MONTH[m].slice(0,3)+".";
-        document.getElementById("freeList").innerHTML = ranges.length 
-            ? ranges.map(r=>`<div class="chip">${r[0]===r[1]?r[0]+" "+mn:r[0]+"-"+r[1]+" "+mn}<small>${r[1]-r[0]+1} วัน</small></div>`).join("")
-            : '<div class="chip" style="background:#fdf1e0;border-color:#f6ddb7;color:#a9671a">เดือนนี้เต็มแล้วค่ะ</div>';
-    }
-
-    document.getElementById("prev").onclick = () => {
-        view = new Date(view.getFullYear(), view.getMonth() - 1, 1);
-        render();
-    };
-    document.getElementById("next").onclick = () => {
-        view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
-        render();
-    };
-
-    load();
+load();
 </script>
-
 </body>
 </html>
