@@ -219,24 +219,21 @@ async function load(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     const rows = parseCSV(await res.text());
     const head = rows[1].map(h=>h.replace(/^\uFEFF/, '').trim());
-    const iN = head.indexOf("ชื่อลูกค้า");
-    const iS = head.indexOf("วันที่จอง");
-    const iE = head.indexOf("ถึงวันที่");
-    const iStat = head.indexOf("สถานะ");
-
-    if(iS<0||iN<0) throw new Error("ไม่พบคอลัมน์ 'วันที่จอง' หรือ 'ชื่อลูกค้า' ในชีต");
+    const iN = 0;
+const iS = 1;
+const iE = 2;
+const iStat = 3;
 
     bookings = rows.slice(1).map(r=>{
-      const status = iStat >= 0 ? (r[iStat] || "").trim() : "จองแล้ว";
-      if(status !== "จองแล้ว" && !status.includes("วันหยุด")) return null;
-      const s = toDate(r[iS]); if(!s) return null;
-      return { 
-        start: s, 
-        end: toDate(r[iE])||s, 
-        name: (r[iN] || "วันหยุด").trim(), 
-        type: status.includes("วันหยุด") ? "วันหยุด" : status 
-      };
-    }).filter(Boolean);
+  const s = toDate(r[iS]); if(!s) return null;
+  const status = (r[iStat] || "จองแล้ว").trim();
+  return {
+    start: s,
+    end: toDate(r[iE])||s,
+    name: (r[iN] || "จองแล้ว").trim(),
+    type: status.includes("วันหยุด") ? "วันหยุด" : "จองแล้ว"
+  };
+}).filter(Boolean);
   }catch(e){
     document.getElementById("errBox").innerHTML=
       `<div class="err">โหลดข้อมูลไม่สำเร็จ (${e.message}) — ตรวจสอบการแชร์และลิงก์ CSV อีกครั้ง</div>`;
