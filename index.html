@@ -4,81 +4,124 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ปฏิทินห้องว่าง | Love U Pool Villa Hua Hin</title>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+:root{--primary:#0f766e;--primary-dark:#115e59;--accent:#f59e0b;--bg:#f8fafc;--card:#ffffff;--text:#1e293b;--muted:#64748b}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Prompt',sans-serif;background:#f4f6f8;color:#243b40;padding:16px;line-height:1.45}
+body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);padding:20px;line-height:1.5}
 .wrap{max-width:1100px;margin:0 auto}
-.hero{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;border-radius:20px;padding:28px;margin-bottom:18px;position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:rgba(255,255,255,.08);border-radius:50%}
-.badge{display:inline-block;background:rgba(255,255,255,.18);padding:6px 14px;border-radius:999px;font-size:.78rem;letter-spacing:.5px;margin-bottom:10px}
-.hero h1{font-size:clamp(1.4rem,3.4vw,2rem);font-weight:600}
-.hero p{font-size:clamp(.82rem,1.8vw,.95rem);opacity:.92;margin-top:6px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
-.stat{background:#fff;border-radius:16px;padding:18px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-.stat b{display:block;font-size:clamp(1.5rem,4vw,2rem);font-weight:600}
-.stat span{font-size:.78rem;color:#6b7b80}
-.c1{color:#d97706}.c2{color:#0f766e}.c3{color:#243b40}.c4{color:#2563eb}
-.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:18px}
-.err{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:12px;padding:12px 16px;font-size:.85rem;margin-bottom:14px}
-.bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+
+/* Hero Section */
+.hero{background:linear-gradient(135deg, #0f766e 0%, #042f2e 100%);color:#fff;border-radius:24px;padding:36px 30px;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(15,118,110,.2)}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:rgba(255,255,255,.05);border-radius:50%}
+.badge{display:inline-block;background:rgba(245,158,11,.2);color:#fbbf24;border:1px solid rgba(245,158,11,.3);padding:6px 16px;border-radius:999px;font-size:.8rem;font-weight:500;letter-spacing:1px;margin-bottom:12px}
+.hero h1{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:700;margin-bottom:6px}
+.hero p{font-size:clamp(.9rem,1.8vw,1.05rem);opacity:.90;font-weight:300}
+
+/* Quick CTA Banner (Phone & LINE) */
+.cta-banner{display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:14px;margin-bottom:20px}
+.cta-card{background:var(--card);border-radius:18px;padding:18px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 20px rgba(0,0,0,.04);text-decoration:none;color:inherit;border:2px solid transparent;transition:all .25s ease}
+.cta-card:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(15,118,110,.12);border-color:var(--primary)}
+.cta-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.cta-card.phone .cta-icon{background:#e0f2fe;color:#0284c7}
+.cta-card.line .cta-icon{background:#dcfce7;color:#16a34a}
+.cta-info span{display:block;font-size:.75rem;color:var(--muted);font-weight:400}
+.cta-info b{font-size:1.1rem;color:var(--text);font-weight:600}
+
+/* Stats Section */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:20px}
+.stat{background:var(--card);border-radius:18px;padding:20px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.04);border:1px solid #f1f5f9}
+.stat b{display:block;font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;margin-bottom:2px}
+.stat span{font-size:.8rem;color:var(--muted);font-weight:500}
+.c-busy{color:#ea580c}.c-free{color:#0f766e}.c-total{color:#0284c7}.c-rate{color:#7c3aed}
+
+/* Calendar Card */
+.card{background:var(--card);border-radius:24px;padding:24px;box-shadow:0 4px 25px rgba(0,0,0,.04);margin-bottom:20px;border:1px solid #f1f5f9}
+.err{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:14px;padding:14px 18px;font-size:.9rem;margin-bottom:16px}
+.bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px}
 .nav{display:flex;align-items:center;gap:14px}
-.nav button{width:40px;height:40px;border-radius:50%;border:1px solid #d8e2e4;background:#fff;cursor:pointer;font-size:1.1rem;color:#0f766e;transition:.2s}
-.nav button:hover{background:#0f766e;color:#fff;border-color:#0f766e}
-.nav h2{font-size:clamp(1rem,2.6vw,1.25rem);font-weight:600;min-width:170px;text-align:center}
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.75rem;color:#53666b}
-.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
-.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
-.dow{text-align:center;font-size:.76rem;font-weight:500;color:#7b8c91;padding:6px 0}
-.day{aspect-ratio:1/1;border-radius:12px;padding:7px;display:flex;flex-direction:column;overflow:hidden;border:1px solid transparent}
-.day .num{font-size:clamp(.78rem,1.9vw,.95rem);font-weight:600;line-height:1.2}
-.day .who{font-size:clamp(.55rem,1.4vw,.68rem);margin-top:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
-.day .tag{font-size:clamp(.52rem,1.3vw,.65rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.9}
-.day .tag:only-of-type{margin-top:auto}
+.nav button{width:42px;height:42px;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:1.2rem;color:var(--primary);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.nav button:hover{background:var(--primary);color:#fff;border-color:var(--primary);transform:scale(1.05)}
+.nav h2{font-size:clamp(1.1rem,2.5vw,1.35rem);font-weight:600;min-width:180px;text-align:center}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);font-weight:500}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%}
+
+/* Grid System */
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.dow{text-align:center;font-size:.82rem;font-weight:600;color:var(--muted);padding:8px 0}
+.day{aspect-ratio:1/1;border-radius:14px;padding:8px;display:flex;flex-direction:column;overflow:hidden;border:1px solid transparent;transition:all .2s}
+.day .num{font-size:clamp(.8rem,1.8vw,1rem);font-weight:700;line-height:1.2}
+.day .who{font-size:clamp(.55rem,1.3vw,.7rem);margin-top:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.day .tag{font-size:clamp(.5rem,1.2vw,.65rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.9}
 .empty{background:transparent;border:none}
-.free-d{background:#ecfdf5;border-color:#c3ece0;color:#0f766e}
+
+.free-d{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
 .busy-d{background:#fff7ed;border-color:#fed7aa;color:#c2410c}
-.special-d{background:#fffbeb;border-color:#fde68a;color:#a16207}
-.past-d{background:#f6f7f8;border-color:#eceff0;color:#a9b4b7}
-.today{box-shadow:0 0 0 2px #0f766e}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.chip{background:#ecfdf5;border:1px solid #c3ece0;color:#0f766e;border-radius:10px;padding:7px 12px;font-size:.78rem}
-.chip small{display:block;font-size:.65rem;opacity:.75}
-.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.ct{border:1px solid #e6ebec;border-radius:14px;padding:16px;text-align:center;cursor:pointer;transition:.2s;text-decoration:none;display:block;color:inherit;background:#fff}
-.ct:hover{border-color:#0f766e;background:#f3fbf9;transform:translateY(-2px)}
-.ct span{display:block;font-size:.72rem;color:#7b8c91;margin-bottom:4px}
-.ct b{font-size:clamp(.95rem,2.2vw,1.1rem);color:#0f766e;font-weight:600}
-.ct em{display:block;font-style:normal;font-size:.68rem;color:#9aa8ac;margin-top:4px}
-.modal{position:fixed;inset:0;background:rgba(15,30,32,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:99}
+.special-d{background:#fefce8;border-color:#fe9a01;color:#a16207}
+.past-d{background:#f8fafc;border-color:#f1f5f9;color:#cbd5e1}
+.today{box-shadow:0 0 0 2px var(--primary)!important}
+
+/* Free Date Chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;border-radius:12px;padding:8px 14px;font-size:.82rem;font-weight:500}
+.chip small{display:block;font-size:.7rem;opacity:.8;font-weight:400}
+
+/* Modal QR Code */
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:99}
 .modal.on{display:flex}
-.box{background:#fff;border-radius:20px;padding:26px;text-align:center;max-width:320px;width:100%}
-.box h3{font-size:1.05rem;font-weight:600;margin-bottom:4px}
-.box p{font-size:.78rem;color:#7b8c91;margin-bottom:14px}
-.box img{width:200px;height:200px;border:1px solid #e6ebec;border-radius:14px;padding:8px}
-.box .lid{font-size:.9rem;font-weight:600;color:#0f766e;margin-top:12px}
-.box a.open{display:block;background:#06c755;color:#fff;border-radius:10px;padding:10px;font-size:.85rem;font-weight:500;text-decoration:none;margin-top:14px}
-.box button{width:100%;margin-top:8px;background:#f1f4f5;border:none;border-radius:10px;padding:10px;font-family:inherit;font-size:.85rem;color:#53666b;cursor:pointer}
-.foot{text-align:center;font-size:.72rem;color:#8b999d;padding:8px 0 20px}
-@media(max-width:560px){body{padding:10px}.card{padding:14px}.grid{gap:4px}.day{padding:5px;border-radius:9px}}
+.box{background:#fff;border-radius:24px;padding:30px;text-align:center;max-width:340px;width:100%;box-shadow:0 20px 40px rgba(0,0,0,.2);animation:pop .25s cubic-bezier(0.16, 1, 0.3, 1)}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.box h3{font-size:1.2rem;font-weight:700;margin-bottom:4px;color:var(--text)}
+.box p{font-size:.82rem;color:var(--muted);margin-bottom:16px}
+.box img{width:220px;height:220px;border:1px solid #e2e8f0;border-radius:16px;padding:10px;background:#fff}
+.box .lid{font-size:.95rem;font-weight:600;color:var(--primary);margin-top:14px}
+.box a.open{display:block;background:#06c755;color:#fff;border-radius:12px;padding:12px;font-size:.9rem;font-weight:600;text-decoration:none;margin-top:14px;box-shadow:0 4px 12px rgba(6,199,85,.3)}
+.box button{width:100%;margin-top:8px;background:#f1f5f9;border:none;border-radius:12px;padding:10px;font-family:inherit;font-size:.85rem;color:var(--muted);cursor:pointer;font-weight:500}
+
+.foot{text-align:center;font-size:.78rem;color:var(--muted);padding:10px 0 20px}
+
+@media(max-width:560px){body{padding:10px}.card{padding:16px}.grid{gap:5px}.day{padding:6px;border-radius:10px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
+  <!-- ส่วนหัวเว็บ -->
   <div class="hero">
     <div class="badge">LOVE U POOL VILLA HUA HIN</div>
-    <h1>ปฏิทินห้องว่าง</h1>
-    <p>ตรวจสอบวันว่างและวันหยุดได้ที่นี่ สนใจวันไหนทักมาได้เลยค่ะ</p>
+    <h1>ปฏิทินห้องว่าง & จองที่พัก</h1>
+    <p>เช็ควันว่างและวันหยุดนักขัตฤกษ์ล่วงหน้าได้ง่ายๆ อยากได้วันไหนทักมาจองเลยค่ะ</p>
   </div>
 
+  <!-- ปุ่มติดต่อด่วน (เบอร์โทร & LINE) -->
+  <div class="cta-banner">
+    <a class="cta-card phone" href="tel:063-659-9893">
+      <div class="cta-icon">📞</div>
+      <div class="cta-info">
+        <span>โทรจอง / สอบถามด่วน</span>
+        <b>081-234-5678</b>
+      </div>
+    </a>
+    <a class="cta-card line" href="#" id="lineBtn">
+      <div class="cta-icon">💬</div>
+      <div class="cta-info">
+        <span>แอด LINE Official</span>
+        <b>loveupoolvillahuahin</b>
+      </div>
+    </a>
+  </div>
+
+  <!-- สถิติภาพรวม -->
   <div class="stats">
-    <div class="stat"><b class="c1" id="sBusy">0</b><span>จองแล้ว (วัน)</span></div>
-    <div class="stat"><b class="c2" id="sFree">0</b><span>ว่าง • จองได้</span></div>
-    <div class="stat"><b class="c3" id="sAll">0</b><span>วันทั้งหมด</span></div>
-    <div class="stat"><b class="c4" id="sRate">0%</b><span>อัตราเข้าพัก</span></div>
+    <div class="stat"><b class="c-busy" id="sBusy">0</b><span>จองแล้ว (วัน)</span></div>
+    <div class="stat"><b class="c-free" id="sFree">0</b><span>ว่าง • จองได้</span></div>
+    <div class="stat"><b class="c-total" id="sAll">0</b><span>วันทั้งหมด</span></div>
+    <div class="stat"><b class="c-rate" id="sRate">0%</b><span>อัตราเข้าพัก</span></div>
   </div>
 
+  <!-- ตัวปฏิทิน -->
   <div class="card">
     <div id="errBox"></div>
     <div class="bar">
@@ -88,57 +131,31 @@ body{font-family:'Prompt',sans-serif;background:#f4f6f8;color:#243b40;padding:16
         <button id="next">&#8250;</button>
       </div>
       <div class="legend">
-        <span><i style="background:#0f766e"></i>ว่างปกติ</span>
-        <span><i style="background:#f59e0b"></i>หยุด / นักขัตฤกษ์</span>
-        <span><i style="background:#ea580c"></i>จองแล้ว</span>
+        <span><i style="background:#15803d"></i>ว่างปกติ</span>
+        <span><i style="background:#ca8a04"></i>วันหยุด</span>
+        <span><i style="background:#c2410c"></i>จองแล้ว</span>
       </div>
     </div>
     <div class="grid" id="grid"></div>
     <div class="chips" id="freeList"></div>
   </div>
 
-  <div class="card contact">
-    <a class="ct" href="tel:***-***-****">
-      <span>โทรจองห้องพัก</span>
-      <b>***-***-****</b>
-      <em>แตะเพื่อโทรออก</em>
-    </a>
-    <a class="ct" href="#" id="lineBtn">
-      <span>LINE ID</span>
-      <b>loveupoolvillahuahin</b>
-      <em>แตะเพื่อแสดง QR Code</em>
-    </a>
-  </div>
-
-  <div class="foot">อัปเดตล่าสุด <span id="upd">—</span></div>
+  <div class="foot">อัปเดตข้อมูลล่าสุดจากระบบ <span id="upd">—</span></div>
 </div>
 
+<!-- Modal แสดง QR Code LINE -->
 <div class="modal" id="qrModal">
   <div class="box">
-    <h3>สแกนเพื่อเพิ่มเพื่อน</h3>
-    <p>Love U Pool Villa Hua Hin</p>
+    <h3>สแกน QR Code</h3>
+    <p>เพิ่มเพื่อนเพื่อสอบถามโปรโมชั่นและจองห้องพัก</p>
     <img id="qrImg" alt="LINE QR Code">
-    <div class="lid">loveupoolvillahuahin</div>
-    <a class="open" href="https://line.me/ti/p/~loveupoolvillahuahin" target="_blank" rel="noopener">เปิดแอป LINE เลย</a>
-    <button id="closeQr">ปิด</button>
+    <div class="lid">@loveupoolvilla</div>
+    <a class="open" href="https://line.me/ti/p/~loveupoolvillahuahin" target="_blank" rel="noopener">เปิดแอป LINE สนทนาทันที</a>
+    <button id="closeQr">ปิดหน้าต่าง</button>
   </div>
 </div>
 
 <script>
-/* ========================================================
-   ตั้งค่าตรงนี้
-   USE_MANUAL = true   -> ใช้ข้อมูลในโค้ดด้านล่าง
-   USE_MANUAL = false  -> ดึงจาก Google Sheets
-   ======================================================== */
-const USE_MANUAL = true;
-
-/* รูปแบบ: ["ชื่อลูกค้า", "วันเช็คอิน", "วันเช็คเอาต์"] */
-const MANUAL_BOOKINGS = [
-  ["คุณสมชาย", "2026-10-18", "2026-10-20"],
-  ["คุณมานี",  "2026-11-07", "2026-11-09"],
-  ["คุณวิชัย",  "2026-12-24", "2026-12-26"]
-];
-
 const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYImqwysptxh2tY3S1x-A5NkYVQmCeKkmpoW5rBHgLScWpTtssy3aKWCDb2dzMafIHs7quW3_5rQRn/pub?output=csv";
 const LINE_URL  = "https://line.me/ti/p/~loveupoolvillahuahin";
 
@@ -202,22 +219,31 @@ function mapRow(r){
   return { start: s, end: toDate(r[2]) || s, name: (r[0] || "จองแล้ว").trim() };
 }
 
-async function load(){
-  if(USE_MANUAL){
-    bookings = MANUAL_BOOKINGS.map(mapRow).filter(Boolean);
-    document.getElementById("errBox").innerHTML = "";
-    render();
-    return;
+async function fetchCSV(url){
+  const tries = [
+    url + "&t=" + Date.now(),
+    "https://api.allorigins.win/raw?url=" + encodeURIComponent(url),
+    "https://corsproxy.io/?" + encodeURIComponent(url)
+  ];
+  for(const u of tries){
+    try{
+      const res = await fetch(u);
+      if(!res.ok) continue;
+      const txt = await res.text();
+      if(txt && txt.indexOf("<") !== 0) return txt;
+    }catch(e){}
   }
+  throw new Error("เชื่อมต่อชีตไม่ได้");
+}
+
+async function load(){
   try{
-    const res = await fetch(SHEET_CSV + "&t=" + Date.now());
-    if(!res.ok) throw new Error("HTTP " + res.status);
-    const rows = parseCSV(await res.text());
+    const rows = parseCSV(await fetchCSV(SHEET_CSV));
     bookings = rows.slice(1).map(mapRow).filter(Boolean);
     document.getElementById("errBox").innerHTML = "";
   }catch(e){
     document.getElementById("errBox").innerHTML =
-      '<div class="err">โหลดข้อมูลไม่สำเร็จ (' + e.message + ') — ลองอัปโหลดไฟล์ขึ้นโฮสต์จริง หรือเปลี่ยน USE_MANUAL เป็น true</div>';
+      '<div class="err">โหลดข้อมูลไม่สำเร็จ (' + e.message + ') — ตรวจสอบอินเทอร์เน็ตหรือลิงก์ CSV อีกครั้ง</div>';
   }
   render();
 }
@@ -260,7 +286,7 @@ function render(){
       if(cur >= today){ free++; freeDays.push(d); }
       grid.insertAdjacentHTML("beforeend",
         '<div class="day special-d' + mark + '"><div class="num">' + num +
-        '</div><div class="who">' + info.name + '</div><div class="tag">หยุด • จองได้</div></div>');
+        '</div><div class="who">' + info.name + '</div><div class="tag">วันหยุด</div></div>');
     } else if(cur < today){
       grid.insertAdjacentHTML("beforeend",
         '<div class="day past-d"><div class="num">' + num +
@@ -289,8 +315,8 @@ function render(){
   const mn = TH_MONTH[m].slice(0, 3) + ".";
   document.getElementById("freeList").innerHTML = ranges.length
     ? ranges.map(r => '<div class="chip">' + (r[0] === r[1] ? r[0] + " " + mn : r[0] + "-" + r[1] + " " + mn) +
-        '<small>' + (r[1] - r[0] + 1) + ' วัน</small></div>').join("")
-    : '<div class="chip" style="background:#fdf1e0;border-color:#f6ddb7;color:#a9671a">เดือนนี้เต็มแล้วค่ะ</div>';
+        '<small>' + (r[1] - r[0] + 1) + ' วันติดต่อกัน</small></div>').join("")
+    : '<div class="chip" style="background:#fff1f2;border-color:#fecdd3;color:#be123c">เดือนนี้เต็มทุกวันแล้วค่ะ</div>';
 
   document.getElementById("upd").textContent = new Date().toLocaleString("th-TH",
     { day:"numeric", month:"long", year:"numeric", hour:"2-digit", minute:"2-digit" });
@@ -309,7 +335,6 @@ document.getElementById("qrImg").src =
 document.getElementById("lineBtn").onclick = function(e){ e.preventDefault(); qrModal.classList.add("on"); };
 document.getElementById("closeQr").onclick = function(){ qrModal.classList.remove("on"); };
 qrModal.onclick = function(e){ if(e.target === qrModal) qrModal.classList.remove("on"); };
-document.addEventListener("keydown", function(e){ if(e.key === "Escape") qrModal.classList.remove("on"); });
 
 load();
 </script>
