@@ -1,160 +1,115 @@
-let bookings = [];
-let view = new Date();
-view.setDate(1);
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ปฏิทินห้องว่าง LOVE U POOL VILLA</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--free:#2fa37a;--free-bg:#e6f6f0;--busy:#e08a2e;--busy-bg:#fdf1e0;
+--ink:#1d2b2b;--muted:#7b8a8a;--line:#e6ecec;--card:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans Thai',system-ui,sans-serif;background:#f3f8f7;color:var(--ink);padding:28px 16px 60px;line-height:1.6}
+.wrap{max-width:980px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#0f766e,#14b8a6);border-radius:24px;padding:34px 30px;color:#fff;margin-bottom:20px}
+.hero h1{font-size:2rem;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+.stat{background:var(--card);border-radius:16px;padding:18px 14px;text-align:center;border:1px solid var(--line)}
+.stat .n{font-size:1.7rem;font-weight:700}
+.n.free{color:var(--free)}.n.busy{color:var(--busy)}
+.cal{background:var(--card);border-radius:22px;padding:26px;border:1px solid var(--line)}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.nav{display:flex;align-items:center;gap:10px}
+.nav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;color:#0f766e}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.dow{text-align:center;font-weight:600;font-size:.85rem;color:#51606a;padding:8px 0}
+.day{min-height:90px;border-radius:14px;padding:9px;border:1px solid transparent;display:flex;flex-direction:column;gap:4px}
+.day .num{font-weight:600}
+.day .tag{font-size:.72rem;font-weight:600;margin-top:auto}
+.free-d{background:var(--free-bg);border-color:#cdeade}.free-d .tag{color:var(--free)}
+.busy-d{background:var(--busy-bg);border-color:#f6ddb7}.busy-d .tag{color:var(--busy)}.busy-d .who{color:#a9671a;font-size:.68rem}
+.past-d{background:#f4f6f6;opacity:.6}.empty{background:#fafbfb}
+.loading{text-align:center;padding:40px;color:var(--muted);grid-column:span 7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero"><h1>ปฏิทินห้องว่าง LOVE U POOL VILLA</h1><p>ตรวจสอบวันว่างได้ที่นี่</p></div>
+  <div class="stats">
+    <div class="stat"><div class="n busy" id="sBusy">–</div><div>จองแล้ว</div></div>
+    <div class="stat"><div class="n free" id="sFree">–</div><div>ว่าง</div></div>
+    <div class="stat"><div class="n" id="sAll">–</div><div>ทั้งหมด</div></div>
+    <div class="stat"><div class="n" id="sRate">–</div><div>อัตราเข้าพัก</div></div>
+  </div>
+  <div class="cal">
+    <div class="cal-head">
+      <div class="nav"><button id="prev">‹</button><h2 id="title">กำลังโหลด…</h2><button id="next">›</button></div>
+    </div>
+    <div class="grid" id="grid"><div class="loading">กำลังดึงข้อมูล…</div></div>
+  </div>
+</div>
+<script>
+const SCRIPT_URL = "วางลิงก์เว็บแอปตรงนี้";
 
-function parseCSV(text) {
-    const rows = []; let row = [], cell="", q=false;
-    for(let i=0; i<text.length; i++){
-        const c = text[i];
-        if(q){
-            if(c==='"'){ if(text[i+1]==='"'){ cell+='"'; i++; } else { q=false; } }
-            else { cell+=c; }
-        } else {
-            if(c==='"') q=true;
-            else if(c===',') { row.push(cell); cell=""; }
-            else if(c==='\n') { row.push(cell); rows.push(row); row=[]; cell=""; }
-            else if(c!=='\r') cell+=c;
-        }
-    }
-    if(cell||row.length){ row.push(cell); rows.push(row); }
-    return rows.filter(r=>r.some(v=>v.trim()!==""));
+const TH_MONTH=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+const DOW=["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัส","ศุกร์","เสาร์"];
+let bookings=[], view=new Date(); view.setDate(1);
+
+function toDate(s){
+  s=(s||"").trim(); if(!s) return null;
+  let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if(m) return new Date(+m[1],+m[2]-1,+m[3]);
+  const d=new Date(s); return isNaN(d)?null:d;
+}
+const key=d=>d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
+
+async function load(){
+  try{
+    const res = await fetch(SCRIPT_URL);
+    const json = await res.json();
+    bookings = json.map(r=>{
+      if((r.status||"").trim() !== "จองแล้ว") return null;
+      const s = toDate(r.start); if(!s) return null;
+      return { start: s, end: toDate(r.end)||s, name: r.name||"จองแล้ว" };
+    }).filter(Boolean);
+  }catch(e){console.log(e);}
+  render();
 }
 
-function toDate(s) {
-    s = (s||"").trim(); if(!s) return null;
-    let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-    if(m) return new Date(+m[1], +m[2]-1, +m[3]);
-    m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if(m) return new Date(+m[3], +m[2]-1, +m[1]);
-    const d = new Date(s); return isNaN(d)?null:d;
+function render(){
+  const y=view.getFullYear(), m=view.getMonth();
+  document.getElementById("title").textContent=TH_MONTH[m]+" "+y;
+  const map={};
+  bookings.forEach(b=>{
+    for(let d=new Date(b.start); d<=b.end; d.setDate(d.getDate()+1)) {
+      map[key(d)]={ name: b.name };
+    }
+  });
+  const now=new Date(), today=new Date(now.getFullYear(),now.getMonth(),now.getDate()), todayK=key(today);
+  const grid=document.getElementById("grid"); grid.innerHTML="";
+  DOW.forEach(d=>grid.insertAdjacentHTML("beforeend",'<div class="dow">'+d+'</div>'));
+  const first=new Date(y,m,1).getDay(), total=new Date(y,m+1,0).getDate();
+  let busy=0, free=0;
+  for(let i=0;i<first;i++) grid.insertAdjacentHTML("beforeend",'<div class="day empty"></div>');
+  for(let d=1;d<=total;d++){
+    const cur=new Date(y,m,d), k=key(cur), info=map[k];
+    const num=String(d).padStart(2,"0");
+    if(info){
+      busy++;
+      grid.insertAdjacentHTML("beforeend",'<div class="day busy-d"><div class="num">'+num+'</div><div class="who">'+info.name+'</div><div class="tag">จองแล้ว</div></div>');
+    } else if(cur<today){
+      grid.insertAdjacentHTML("beforeend",'<div class="day past-d"><div class="num">'+num+'</div><div class="tag">ผ่านไปแล้ว</div></div>');
+    } else { 
+      free++;
+      grid.insertAdjacentHTML("beforeend",'<div class="day free-d"><div class="num">'+num+'</div><div class="tag">ว่าง • จองได้</div></div>');
+    }
+  }
+  sBusy.textContent=busy; sFree.textContent=free; sAll.textContent=total;
+  sRate.textContent=(busy/total*100).toFixed(1)+"%";
 }
-
-const key = d => d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
-
-async function load() {
-    try {
-        const res = await fetch(SHEET_CSV + "&t=" + Date.now());
-        if(!res.ok) throw new Error("HTTP " + res.status);
-        const rows = parseCSV(await res.text());
-        const head = rows[0].map(h=>h.replace(/^\uFEFF/, '').trim());
-        const iN = 0, iS = 1, iE = 2, iStat = 3;
-
-        bookings = rows.slice(1).map(r=>{
-            const s = toDate(r[iS]); if(!s) return null;
-            const status = (r[iStat] || "จองแล้ว").trim();
-            return {
-                start: s,
-                end: toDate(r[iE])||s,
-                name: (r[iN] || "จองแล้ว").trim(),
-                type: status.includes("วันหยุด") ? "วันหยุด" : "จองแล้ว"
-            };
-        }).filter(Boolean);
-
-        const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const todayK = key(today);
-
-        const todayCheckIns = bookings.filter(b => key(b.start) === todayK && b.type === 'จองแล้ว');
-        const alertBox = document.getElementById("checkInAlert");
-        if(alertBox) {
-            if(todayCheckIns.length > 0){
-                const names = todayCheckIns.map(b => b.name).join(", ");
-                alertBox.innerHTML = `<div class="alert-banner"><span>แจ้งเตือนวันนี้</span> มีลูกค้าเช็คอินเข้าพัก: <b>${names}</b></div>`;
-            } else {
-                alertBox.innerHTML = "";
-            }
-        }
-    } catch(e) {
-        const errBox = document.getElementById("errBox");
-        if(errBox) errBox.innerHTML = `<div class="err">โหลดข้อมูลไม่สำเร็จ (${e.message}) - ตรวจสอบการแชร์และลิงก์ CSV อีกครั้ง</div>`;
-    }
-    render();
-}
-
-function render() {
-    const grid = document.getElementById("grid");
-    if(!grid) return;
-    grid.innerHTML = "";
-    if(typeof DOW !== 'undefined') {
-        DOW.forEach(d => grid.insertAdjacentHTML("beforeend", `<div class="dow">${d}</div>`));
-    }
-
-    const y = view.getFullYear();
-    const m = view.getMonth();
-    const titleEl = document.getElementById("title");
-    if(titleEl && typeof TH_MONTH !== 'undefined') {
-        titleEl.textContent = TH_MONTH[m] + " " + y;
-    }
-
-    const map = {};
-    if(typeof TH_HOLIDAYS !== 'undefined') {
-        for(let k in TH_HOLIDAYS){
-            map[k] = { name: TH_HOLIDAYS[k], type: 'วันหยุด' };
-        }
-    }
-
-    bookings.forEach(b=>{
-        for(let d=new Date(b.start); d<=b.end; d.setDate(d.getDate()+1)) {
-            map[key(d)] = { name: b.name, type: b.type };
-        }
-    });
-
-    const first = new Date(y, m, 1).getDay();
-    const total = new Date(y, m + 1, 0).getDate();
-    let busy = 0, free = 0;
-    const freeDays = [];
-
-    for(let i=0; i<first; i++) grid.insertAdjacentHTML("beforeend", '<div class="day empty"></div>');
-
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const todayK = key(today);
-
-    for(let d=1; d<=total; d++){
-        const cur = new Date(y, m, d), k = key(cur), info = map[k];
-        const mark = (k === todayK ? " today" : ""), num = String(d).padStart(2,"0");
-
-        if(info && info.type === 'จองแล้ว'){
-            busy++;
-            grid.insertAdjacentHTML("beforeend", `<div class="day busy-d${mark}"><div class="num">${num}</div><div class="who">${info.name}</div><div class="tag">จองแล้ว</div></div>`);
-        } else if(info && info.type === 'วันหยุด'){
-            free++; freeDays.push(d);
-            grid.insertAdjacentHTML("beforeend", `<div class="day special-d${mark}"><div class="num">${num}</div><div class="who">${info.name}</div><div class="tag">หยุด • นักขัตฤกษ์</div></div>`);
-        } else if(cur < today){
-            grid.insertAdjacentHTML("beforeend", `<div class="day past-d"><div class="num">${num}</div><div class="tag">ผ่านไปแล้ว</div></div>`);
-        } else {
-            free++; freeDays.push(d);
-            grid.insertAdjacentHTML("beforeend", `<div class="day free-d${mark}"><div class="num">${num}</div><div class="tag">ว่าง • จองได้</div></div>`);
-        }
-    }
-
-    const rest = (7 - ((first + total) % 7)) % 7;
-    for(let i=0; i<rest; i++) grid.insertAdjacentHTML("beforeend", '<div class="day empty"></div>');
-
-    if(document.getElementById("sBusy")) document.getElementById("sBusy").textContent = busy;
-    if(document.getElementById("sFree")) document.getElementById("sFree").textContent = free;
-    if(document.getElementById("sAll")) document.getElementById("sAll").textContent = total;
-    if(document.getElementById("sRate")) document.getElementById("sRate").textContent = (busy / total * 100).toFixed(1) + "%";
-
-    const ranges = [];
-    freeDays.forEach(d=>{
-        const last = ranges[ranges.length-1];
-        if(last && d === last[1]+1) last[1] = d; else ranges.push([d,d]);
-    });
-
-    const freeList = document.getElementById("freeList");
-    if(freeList && typeof TH_MONTH !== 'undefined') {
-        const mn = TH_MONTH[m].slice(0,3)+".";
-        freeList.innerHTML = ranges.length 
-            ? ranges.map(r=>`<div class="chip">${r[0]===r[1]?r[0]+" "+mn:r[0]+"-"+r[1]+" "+mn}<small>${r[1]-r[0]+1} วัน</small></div>`).join("")
-            : '<div class="chip" style="background:#fdf1e0;border-color:#f6ddb7;color:#a9671a">เดือนนี้เต็มแล้วค่ะ</div>';
-    }
-
-    if(document.getElementById("upd")) {
-        document.getElementById("upd").textContent = new Date().toLocaleString("th-TH",{day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"});
-    }
-}
-
-document.getElementById("prev").onclick = () => { view.setMonth(view.getMonth()-1); render(); };
-document.getElementById("next").onclick = () => { view.setMonth(view.getMonth()+1); render(); };
+document.getElementById("prev").onclick=()=>{view.setMonth(view.getMonth()-1);render();};
+document.getElementById("next").onclick=()=>{view.setMonth(view.getMonth()+1);render();};
 load();
+</script>
+</body>
+</html>
