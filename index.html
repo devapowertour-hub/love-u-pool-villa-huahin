@@ -7,351 +7,106 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--free:#2fa37a;--free-bg:#e6f6f0;--busy:#e08a2e;--busy-bg:#fdf1e0;
---special:#d97706;--special-bg:#fef3c7;--ink:#1d2b2b;--muted:#7b8a8a;--line:#e6ecec;--card:#fff}
+--ink:#1d2b2b;--muted:#7b8a8a;--line:#e6ecec;--card:#fff}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans Thai',system-ui,sans-serif;background:linear-gradient(160deg,#f3f8f7,#eef4fb);
-color:var(--ink);padding:28px 16px 60px;line-height:1.6}
+body{font-family:'Noto Sans Thai',system-ui,sans-serif;background:#f3f8f7;color:var(--ink);padding:28px 16px 60px;line-height:1.6}
 .wrap{max-width:980px;margin:0 auto}
-.hero{background:linear-gradient(135deg,#0f766e,#14b8a6);border-radius:24px;padding:34px 30px;color:#fff;
-box-shadow:0 18px 40px rgba(15,118,110,.25);position:relative;overflow:hidden;margin-bottom:20px}
-.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;
-background:rgba(255,255,255,.12);border-radius:50%}
-.badge{display:inline-block;background:rgba(255,255,255,.2);padding:5px 14px;border-radius:999px;
-font-size:.82rem;margin-bottom:12px}
-.hero h1{font-size:2rem;font-weight:700;line-height:1.3}
-.hero p{opacity:.9;margin-top:6px;font-weight:300}
-
-.alert-banner{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:16px 22px;
-border-radius:18px;margin-bottom:22px;font-weight:600;box-shadow:0 8px 24px rgba(245,158,11,.25);
-display:flex;align-items:center;gap:12px;font-size:1.02rem}
-.alert-banner span{background:rgba(255,255,255,.25);padding:4px 10px;border-radius:8px;font-size:.85rem}
-
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px;position:relative;z-index:2}
-.stat{background:var(--card);border-radius:16px;padding:18px 14px;text-align:center;
-box-shadow:0 8px 24px rgba(20,50,50,.07);border:1px solid var(--line)}
-.stat .n{font-size:1.7rem;font-weight:700;line-height:1.1}
-.stat .l{font-size:.8rem;color:var(--muted);margin-top:4px}
-.n.free{color:var(--free)}.n.busy{color:var(--busy)}.n.rate{color:#2563eb}
-
-.cal{background:var(--card);border-radius:22px;padding:26px;border:1px solid var(--line);
-box-shadow:0 10px 30px rgba(20,50,50,.06)}
-.cal-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+.hero{background:linear-gradient(135deg,#0f766e,#14b8a6);border-radius:24px;padding:34px 30px;color:#fff;margin-bottom:20px}
+.hero h1{font-size:2rem;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+.stat{background:var(--card);border-radius:16px;padding:18px 14px;text-align:center;border:1px solid var(--line)}
+.stat .n{font-size:1.7rem;font-weight:700}
+.n.free{color:var(--free)}.n.busy{color:var(--busy)}
+.cal{background:var(--card);border-radius:22px;padding:26px;border:1px solid var(--line)}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .nav{display:flex;align-items:center;gap:10px}
-.nav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;
-cursor:pointer;font-size:1.1rem;color:#0f766e}
-.nav button:hover{background:#e6f6f0}
-.nav h2{font-size:1.25rem;min-width:190px;text-align:center}
-.legend{display:flex;gap:14px;font-size:.85rem;color:var(--muted)}
-.legend span{display:flex;align-items:center;gap:6px}
-.dot{width:11px;height:11px;border-radius:4px;display:inline-block}
-.dot.f{background:var(--free)}.dot.b{background:var(--busy)}.dot.s{background:var(--special)}
-
+.nav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;color:#0f766e}
 .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
 .dow{text-align:center;font-weight:600;font-size:.85rem;color:#51606a;padding:8px 0}
-.day{min-height:92px;border-radius:14px;padding:9px 10px;border:1px solid transparent;
-display:flex;flex-direction:column;gap:4px;transition:.2s}
-.day:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(20,50,50,.1)}
-.day .num{font-weight:600;font-size:.95rem}
+.day{min-height:90px;border-radius:14px;padding:9px;border:1px solid transparent;display:flex;flex-direction:column;gap:4px}
+.day .num{font-weight:600}
 .day .tag{font-size:.72rem;font-weight:600;margin-top:auto}
-.day .who{font-size:.68rem;line-height:1.35;word-break:break-word}
-
-.free-d{background:var(--free-bg);border-color:#cdeade}
-.free-d .num{color:#14705a}.free-d .tag{color:var(--free)}
-
-.special-d{background:var(--special-bg);border-color:#fde68a}
-.special-d .num{color:#b45309}.special-d .tag{color:var(--special)}
-.special-d .who{color:#92400e;font-weight:600}
-
-.busy-d{background:var(--busy-bg);border-color:#f6ddb7}
-.busy-d .num{color:#a9671a}.busy-d .tag{color:var(--busy)}
-.busy-d .who{color:#a9671a}
-
-.past-d{background:#f4f6f6;border-color:var(--line);opacity:.6}
-.past-d .num,.past-d .tag{color:#9aa7a7}
-.today{outline:2.5px solid #0f766e;outline-offset:-2px}
-.empty{background:#fafbfb;border-color:var(--line)}
-
-.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 24px;margin-top:22px}
-.panel h3{font-size:1.05rem;margin-bottom:12px}
-.free-list{display:flex;flex-wrap:wrap;gap:10px}
-.chip{background:var(--free-bg);border:1px solid #cdeade;color:#14705a;padding:9px 15px;
-border-radius:12px;font-size:.92rem;font-weight:600;text-align:center}
-.chip small{display:block;font-weight:400;color:var(--free);font-size:.72rem}
-
-.cta{margin-top:22px;text-align:center;background:linear-gradient(135deg,#0f766e,#14b8a6);
-border-radius:20px;padding:28px;color:#fff}
-.cta h3{font-size:1.2rem;margin-bottom:6px}
-.cta p{opacity:.9;font-weight:300;margin-bottom:16px}
-.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{padding:12px 26px;border-radius:999px;font-weight:600;text-decoration:none;font-size:.95rem;display:inline-block}
-.btn.primary{background:#fff;color:#0f766e}
-.btn.ghost{border:1.6px solid rgba(255,255,255,.75);color:#fff}
-.btn:hover{opacity:.9}
-footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:24px}
-.loading{text-align:center;padding:40px;color:var(--muted)}
-.err{background:#fdecec;color:#b42318;border:1px solid #f6cfcf;border-radius:12px;padding:14px;font-size:.88rem;margin-bottom:16px}
-
-@media(max-width:720px){
-.stats{grid-template-columns:repeat(2,1fr)}
-.hero h1{font-size:1.5rem}
-.day{min-height:70px;padding:6px}
-.day .tag,.day .who{font-size:.6rem}
-.dow{font-size:.7rem}.cal{padding:16px}
-.nav h2{font-size:1rem;min-width:140px}}
+.free-d{background:var(--free-bg);border-color:#cdeade}.free-d .tag{color:var(--free)}
+.busy-d{background:var(--busy-bg);border-color:#f6ddb7}.busy-d .tag{color:var(--busy)}.busy-d .who{color:#a9671a;font-size:.68rem}
+.past-d{background:#f4f6f6;opacity:.6}.empty{background:#fafbfb}
+.loading{text-align:center;padding:40px;color:var(--muted);grid-column:span 7}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="hero">
-    <span class="badge">LOVE U POOL VILLA HUA HIN</span>
-    <h1>ปฏิทินห้องว่าง</h1>
-    <p>ตรวจสอบวันว่างและวันหยุดได้ที่นี่ สนใจวันไหนทักมาได้เลยค่ะ</p>
-  </div>
-
-  <div id="checkInAlert"></div>
-
+  <div class="hero"><h1>ปฏิทินห้องว่าง LOVE U POOL VILLA</h1><p>ตรวจสอบวันว่างได้ที่นี่</p></div>
   <div class="stats">
-    <div class="stat"><div class="n busy" id="sBusy">–</div><div class="l">จองแล้ว (วัน)</div></div>
-    <div class="stat"><div class="n free" id="sFree">–</div><div class="l">ว่าง • จองได้</div></div>
-    <div class="stat"><div class="n" id="sAll">–</div><div class="l">วันทั้งหมด</div></div>
-    <div class="stat"><div class="n rate" id="sRate">–</div><div class="l">อัตราเข้าพัก</div></div>
+    <div class="stat"><div class="n busy" id="sBusy">–</div><div>จองแล้ว</div></div>
+    <div class="stat"><div class="n free" id="sFree">–</div><div>ว่าง</div></div>
+    <div class="stat"><div class="n" id="sAll">–</div><div>ทั้งหมด</div></div>
+    <div class="stat"><div class="n" id="sRate">–</div><div>อัตราเข้าพัก</div></div>
   </div>
-
   <div class="cal">
-    <div id="errBox"></div>
     <div class="cal-head">
-      <div class="nav">
-        <button id="prev">‹</button>
-        <h2 id="title">กำลังโหลด…</h2>
-        <button id="next">›</button>
-      </div>
-      <div class="legend">
-        <span><i class="dot f"></i> ว่างปกติ</span>
-        <span><i class="dot s"></i> หยุด / นักขัตฤกษ์</span>
-        <span><i class="dot b"></i> จองแล้ว</span>
-      </div>
+      <div class="nav"><button id="prev">‹</button><h2 id="title">กำลังโหลด…</h2><button id="next">›</button></div>
     </div>
     <div class="grid" id="grid"><div class="loading">กำลังดึงข้อมูล…</div></div>
   </div>
-
-  <div class="panel">
-    <h3>ช่วงวันว่างที่จองได้</h3>
-    <div class="free-list" id="freeList"></div>
-  </div>
-
-  <div class="cta">
-    <h3>สนใจจองวันว่าง?</h3>
-    <p>ทักมาสอบถามราคาและรายละเอียดได้ตลอด 24 ชม.</p>
-    <div class="btns">
-      <a class="btn primary" href="tel:0636599893">โทร 063-659-9893</a>
-      <a class="btn ghost" href="https://line.me/ti/p/~loveupoolvillahuahin" target="_blank">แชททาง LINE</a>
-    </div>
-  </div>
-
-  <footer>อัปเดตล่าสุด: <span id="upd">–</span> • กรุณายืนยันก่อนโอน</footer>
 </div>
-
 <script>
-/* =========================================================
-   วางลิงก์ CSV ของคุณไว้ระหว่างเครื่องหมายคำพูดด้านล่างนี้
-========================================================= */
-const SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYImqwysptxh2tY3S1x-A5NkYVQmCeKkmpoW5rBHgLScWpTtssy3aKWCDb2dzMafIHs7quW3_5rQRn/pub?output=csv";
+const SCRIPT_URL = "วางลิงก์เว็บแอปตรงนี้";
 
-const TH_MONTH=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
-"กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+const TH_MONTH=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
 const DOW=["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัส","ศุกร์","เสาร์"];
-
-const TH_HOLIDAYS = {
-  // --- วันหยุดปี 2026 ---
-  "2026-1-1": "วันขึ้นปีใหม่",
-  "2026-3-3": "วันมาฆบูชา",
-  "2026-4-6": "วันจักรี",
-  "2026-4-13": "วันสงกรานต์",
-  "2026-4-14": "วันสงกรานต์",
-  "2026-4-15": "วันสงกรานต์",
-  "2026-5-1": "วันแรงงานแห่งชาติ",
-  "2026-5-4": "วันฉัตรมงคล",
-  "2026-5-31": "วันวิสาขบูชา",
-  "2026-6-3": "วันเฉลิมพระชนมพรรษาฯ",
-  "2026-7-28": "วันเฉลิมพระชนมพรรษา ร.10",
-  "2026-7-29": "วันอาสาฬหบูชา",
-  "2026-7-30": "วันเข้าพรรษา",
-  "2026-8-12": "วันแม่แห่งชาติ",
-  "2026-10-13": "วันนวมินทรมหาราช",
-  "2026-10-23": "วันปิยมหาราช",
-  "2026-10-26": "วันออกพรรษา",
-  "2026-11-24": "วันลอยกระทง",
-  "2026-12-5": "วันพ่อแห่งชาติ",
-  "2026-12-10": "วันรัฐธรรมนูญ",
-  "2026-12-31": "วันสิ้นปี",
-
-  // --- วันหยุดปี 2027 ---
-  "2027-1-1": "วันขึ้นปีใหม่",
-  "2027-2-22": "วันหยุดชดเชยวันมาฆบูชา",
-  "2027-4-6": "วันจักรี",
-  "2027-4-13": "วันสงกรานต์",
-  "2027-4-14": "วันสงกรานต์",
-  "2027-4-15": "วันสงกรานต์",
-  "2027-5-1": "วันแรงงานแห่งชาติ",
-  "2027-5-3": "วันหยุดชดเชยวันแรงงานแห่งชาติ",
-  "2027-5-4": "วันฉัตรมงคล",
-  "2027-5-20": "วันวิสาขบูชา",
-  "2027-6-3": "วันเฉลิมพระชนมพรรษาฯ",
-  "2027-7-19": "วันอาสาฬหบูชา",
-  "2027-7-20": "วันเข้าพรรษา",
-  "2027-7-28": "วันเฉลิมพระชนมพรรษา ร.10",
-  "2027-8-12": "วันแม่แห่งชาติ",
-  "2027-10-13": "วันนวมินทรมหาราช",
-  "2027-10-25": "วันหยุดชดเชยวันปิยมหาราช",
-  "2027-12-5": "วันพ่อแห่งชาติ",
-  "2027-12-6": "วันหยุดชดเชยวันพ่อแห่งชาติ",
-  "2027-12-10": "วันรัฐธรรมนูญ",
-  "2027-12-31": "วันสิ้นปี"
-};
-
 let bookings=[], view=new Date(); view.setDate(1);
-
-function parseCSV(text){
-  const rows=[]; let row=[], cell="", q=false;
-  for(let i=0;i<text.length;i++){
-    const c=text[i];
-    if(q){
-      if(c==='"'){ text[i+1]==='"'?(cell+='"',i++):q=false; }
-      else cell+=c;
-    }else{
-      if(c==='"') q=true;
-      else if(c===','){ row.push(cell); cell=""; }
-      else if(c==='\n'){ row.push(cell); rows.push(row); row=[]; cell=""; }
-      else if(c!=='\r') cell+=c;
-    }
-  }
-  if(cell||row.length){ row.push(cell); rows.push(row); }
-  return rows.filter(r=>r.some(v=>v.trim()!==""));
-}
 
 function toDate(s){
   s=(s||"").trim(); if(!s) return null;
   let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
   if(m) return new Date(+m[1],+m[2]-1,+m[3]);
-  m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-  if(m) return new Date(+m[3],+m[2]-1,+m[1]);
   const d=new Date(s); return isNaN(d)?null:d;
 }
-const key=d=>d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+const key=d=>d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
 
 async function load(){
   try{
-    const res = await fetch(SHEET_CSV + "&t=" + Date.now());
-    if(!res.ok) throw new Error("HTTP "+res.status);
-    const rows = parseCSV(await res.text());
-    const head = rows[0].map(h=>h.replace(/^\uFEFF/, '').trim());
-    const iN = 0;
-    const iS = 1;
-    const iE = 2;
-    const iStat = 3;
-
-   
-    bookings = bookings = rows.slice(1).map(r=>{
-  const s = toDate(r[iS]); if(!s) return null;
-  const status = (r[iStat] || "จองแล้ว").trim();
-  return {
-    start: s,
-    end: toDate(r[iE])||s,
-    name: (r[iN] || "จองแล้ว").trim(),
-    type: status.includes("วันหยุด") ? "วันหยุด" : "จองแล้ว"
-  };
-}).filter(Boolean);
-  }catch(e){
-    document.getElementById("errBox").innerHTML=
-      `<div class="err">โหลดข้อมูลไม่สำเร็จ (${e.message}) — ตรวจสอบการแชร์และลิงก์ CSV อีกครั้ง</div>`;
-  }
+    const res = await fetch(SCRIPT_URL);
+    const json = await res.json();
+    bookings = json.map(r=>{
+      if((r.status||"").trim() !== "จองแล้ว") return null;
+      const s = toDate(r.start); if(!s) return null;
+      return { start: s, end: toDate(r.end)||s, name: r.name||"จองแล้ว" };
+    }).filter(Boolean);
+  }catch(e){console.log(e);}
   render();
 }
 
 function render(){
   const y=view.getFullYear(), m=view.getMonth();
   document.getElementById("title").textContent=TH_MONTH[m]+" "+y;
-
-  const map = {};
-for(let k in TH_HOLIDAYS){
-    map[k] = { name: TH_HOLIDAYS[k], type: 'วันหยุด' };
-}
-  }
-
+  const map={};
   bookings.forEach(b=>{
     for(let d=new Date(b.start); d<=b.end; d.setDate(d.getDate()+1)) {
-      map[key(d)]={ name: b.name, type: b.type };
+      map[key(d)]={ name: b.name };
     }
   });
-
-  const now=new Date();
-  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  const todayK=key(today);
-
-  const todayCheckIns = bookings.filter(b => key(b.start) === todayK && b.type === 'จองแล้ว');
-  const alertBox = document.getElementById("checkInAlert");
-  if(todayCheckIns.length > 0){
-    const names = todayCheckIns.map(b => b.name).join(", ");
-    alertBox.innerHTML = `<div class="alert-banner"><span>แจ้งเตือนวันนี้</span> มีลูกค้าเช็คอินเข้าพัก: <b>${names}</b></div>`;
-  } else {
-    alertBox.innerHTML = "";
-  }
-
+  const now=new Date(), today=new Date(now.getFullYear(),now.getMonth(),now.getDate()), todayK=key(today);
   const grid=document.getElementById("grid"); grid.innerHTML="";
   DOW.forEach(d=>grid.insertAdjacentHTML("beforeend",'<div class="dow">'+d+'</div>'));
-
-const y = view.getFullYear();
-const m = view.getMonth();
-const map = {};
-for(let k in TH_HOLIDAYS){
-    map[k] = { name: TH_HOLIDAYS[k], type: 'วันหยุด' };
-}
-const first = new Date(y, m, 1).getDay();
-const total = new Date(y, m + 1, 0).getDate();
-let busy = 0, free = 0;
-const freeDays = [];
-grid.innerHTML = "";
-
+  const first=new Date(y,m,1).getDay(), total=new Date(y,m+1,0).getDate();
+  let busy=0, free=0;
   for(let i=0;i<first;i++) grid.insertAdjacentHTML("beforeend",'<div class="day empty"></div>');
   for(let d=1;d<=total;d++){
     const cur=new Date(y,m,d), k=key(cur), info=map[k];
-    const mark=(k===todayK?" today":""), num=String(d).padStart(2,"0");
-    
-    if(info && info.type === 'จองแล้ว'){
+    const num=String(d).padStart(2,"0");
+    if(info){
       busy++;
-      grid.insertAdjacentHTML("beforeend",'<div class="day busy-d'+mark+'"><div class="num">'+num+
-      '</div><div class="who">'+info.name+'</div><div class="tag">จองแล้ว</div></div>');
-    } else if(info && info.type === 'วันหยุด'){
-      free++; freeDays.push(d);
-      grid.insertAdjacentHTML("beforeend",'<div class="day special-d'+mark+'"><div class="num">'+num+
-      '</div><div class="who">'+info.name+'</div><div class="tag">หยุด • นักขัตฤกษ์</div></div>');
+      grid.insertAdjacentHTML("beforeend",'<div class="day busy-d"><div class="num">'+num+'</div><div class="who">'+info.name+'</div><div class="tag">จองแล้ว</div></div>');
     } else if(cur<today){
-      grid.insertAdjacentHTML("beforeend",'<div class="day past-d"><div class="num">'+num+
-      '</div><div class="tag">ผ่านไปแล้ว</div></div>');
+      grid.insertAdjacentHTML("beforeend",'<div class="day past-d"><div class="num">'+num+'</div><div class="tag">ผ่านไปแล้ว</div></div>');
     } else { 
-      free++; freeDays.push(d);
-      grid.insertAdjacentHTML("beforeend",'<div class="day free-d'+mark+'"><div class="num">'+num+
-      '</div><div class="tag">ว่าง • จองได้</div></div>');
+      free++;
+      grid.insertAdjacentHTML("beforeend",'<div class="day free-d"><div class="num">'+num+'</div><div class="tag">ว่าง • จองได้</div></div>');
     }
   }
-  const rest=(7-((first+total)%7))%7;
-  for(let i=0;i<rest;i++) grid.insertAdjacentHTML("beforeend",'<div class="day empty"></div>');
-
   sBusy.textContent=busy; sFree.textContent=free; sAll.textContent=total;
   sRate.textContent=(busy/total*100).toFixed(1)+"%";
-
-  const ranges=[];
-  freeDays.forEach(d=>{const last=ranges[ranges.length-1];
-    if(last && d===last[1]+1) last[1]=d; else ranges.push([d,d]);});
-  const mn=TH_MONTH[m].slice(0,3)+".";
-  document.getElementById("freeList").innerHTML = ranges.length
-    ? ranges.map(r=>'<div class="chip">'+(r[0]===r[1]?r[0]+" "+mn:r[0]+"–"+r[1]+" "+mn)+
-      '<small>'+(r[1]-r[0]+1)+' วัน</small></div>').join("")
-    : '<div class="chip" style="background:#fdf1e0;border-color:#f6ddb7;color:#a9671a">เดือนนี้เต็มแล้วค่ะ</div>';
-
-  document.getElementById("upd").textContent=
-    new Date().toLocaleString("th-TH",{day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"});
-
+}
 document.getElementById("prev").onclick=()=>{view.setMonth(view.getMonth()-1);render();};
 document.getElementById("next").onclick=()=>{view.setMonth(view.getMonth()+1);render();};
 load();
