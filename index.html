@@ -105,7 +105,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:24px}
   <div class="hero">
     <span class="badge">LOVE U POOL VILLA HUA HIN</span>
     <h1>ปฏิทินห้องว่าง</h1>
-    <p>ตรวจสอบวันว่างและวันหยุดได้ที่นี่ สนใจวันไหนทักมาได้เลยครับ</p>
+    <p>ตรวจสอบวันว่างและวันหยุดได้ที่นี่ สนใจวันไหนทักมาได้เลยค่ะ</p>
   </div>
 
   <div id="checkInAlert"></div>
@@ -127,7 +127,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:24px}
       </div>
       <div class="legend">
         <span><i class="dot f"></i> ว่างปกติ</span>
-        <span><i class="dot s"></i> หยุด / ราคาพิเศษ</span>
+        <span><i class="dot s"></i> หยุด / นักขัตฤกษ์</span>
         <span><i class="dot b"></i> จองแล้ว</span>
       </div>
     </div>
@@ -228,9 +228,14 @@ async function load(){
 
     bookings = rows.slice(1).map(r=>{
       const status = iStat >= 0 ? (r[iStat] || "").trim() : "จองแล้ว";
-      if(status !== "จองแล้ว" && status !== "วันหยุด") return null;
+      if(status !== "จองแล้ว" && !status.includes("วันหยุด")) return null;
       const s = toDate(r[iS]); if(!s) return null;
-      return { start:s, end:toDate(r[iE])||s, name:(r[iN]||"วันหยุด").trim(), type:status };
+      return { 
+        start: s, 
+        end: toDate(r[iE])||s, 
+        name: (r[iN] || "วันหยุด").trim(), 
+        type: status.includes("วันหยุด") ? "วันหยุด" : status 
+      };
     }).filter(Boolean);
   }catch(e){
     document.getElementById("errBox").innerHTML=
@@ -288,7 +293,7 @@ function render(){
     } else if(info && info.type === 'วันหยุด'){
       free++; freeDays.push(d);
       grid.insertAdjacentHTML("beforeend",'<div class="day special-d'+mark+'"><div class="num">'+num+
-      '</div><div class="who">'+info.name+'</div><div class="tag">หยุด • ราคาพิเศษ</div></div>');
+      '</div><div class="who">'+info.name+'</div><div class="tag">หยุด • นักขัตฤกษ์</div></div>');
     } else if(cur<today){
       grid.insertAdjacentHTML("beforeend",'<div class="day past-d"><div class="num">'+num+
       '</div><div class="tag">ผ่านไปแล้ว</div></div>');
